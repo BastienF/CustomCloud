@@ -1,0 +1,7 @@
+---
+# Setup Proxmox
+- hosts: vm
+  gather_facts: False
+  roles: 
+    - role: vm_create
+      delegate_to: proxmox

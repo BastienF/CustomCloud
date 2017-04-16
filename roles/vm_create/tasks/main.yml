@@ -1,0 +1,10 @@
+---
+
+- name: create vm
+  shell: pvesh create "/nodes/{{ kvm_node }}/qemu" -vmid "{{ vmid }}" -balloon "{{ balloon }}" -memory "{{ memory }}" -sockets "{{ sockets }}" -cores "{{ cores }}" -net0 virtio,bridge=vmbr2 "-virtio0=local:{{ disk_size_go }},format=qcow2" -ide2 "local:iso/{{ iso_os }},media=cdrom"
+  become: yes
+
+- name: start vm
+  shell: qm start "{{ vmid }}"
+  ignore_errors: true
+  become: yes

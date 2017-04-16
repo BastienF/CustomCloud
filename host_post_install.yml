@@ -1,0 +1,5 @@
+---
+# Setup Proxmox
+- hosts: host
+  roles: 
+    - role: host_create_lan

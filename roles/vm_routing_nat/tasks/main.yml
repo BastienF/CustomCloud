@@ -1,0 +1,13 @@
+---
+
+- name: create relative port forwarding for vm
+  iptables: table=nat chain=PREROUTING in_interface=vmbr0 protocol=tcp match=tcp destination_port="{{ port_redirect_prefix }}{{ item }}" jump=DNAT to_destination="{{ private_ip }}:{{ item }}" comment="Redirect from {{ port_redirect_prefix }}{{ item }} to {{ inventory_hostname }}:{{item}}"
+  with_items:
+  - "{{ ports_to_redirect }}"
+  become: yes
+
+- name: create absolute port forwarding for vm
+  iptables: table=nat chain=PREROUTING in_interface=vmbr0 protocol=tcp match=tcp destination_port="{{ item }}" jump=DNAT to_destination="{{ private_ip }}:{{ item }}" comment="Redirect from {{ port_redirect_prefix }}{{ item }} to {{ inventory_hostname }}:{{item}}"
+  with_items:
+  - "{{ admin_ports|default('[]') }}"
+  become: yes
