@@ -1,0 +1,13 @@
+#!/bin/sh
+{% for port, config in exposed_ports.items() %}
+{% set host_port = (port_redirect_prefix|int + port|int) if config.prefix else port %}
+{% if (not config.prefix) or (host_port >= port_redirect_prefix and host_port < (port_redirect_prefix|int + allowed_range_port|int)) %}
+
+iptables -t nat -C PREROUTING -i vmbr0 -p {{ config.prot }} --dport {{ host_port }} -j DNAT --to {{ private_ip }}:{{ port }} || iptables -t nat -A PREROUTING -i vmbr0 -p {{ config.prot }} --dport {{ host_port }} -j DNAT --to {{ private_ip }}:{{ port }}
+iptables -C INPUT -p {{ config.prot }} --dport {{ host_port }} -j ACCEPT || iptables -t filter -A INPUT -p {{ config.prot }} --dport {{ host_port }} -j ACCEPT
+iptables -C OUTPUT -p {{ config.prot }} --dport {{ host_port }} -j ACCEPT || iptables -t filter -A OUTPUT -p {{ config.prot }} --dport {{ host_port }} -j ACCEPT
+{% else %}
+
+#redirection from {{ host_port }} to {{ port }} not allowed. {{ host_port }} is not in allowed port range.
+{% endif %}
+{% endfor %}

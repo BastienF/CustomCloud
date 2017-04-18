@@ -2,8 +2,6 @@
 # Setup Proxmox
 - hosts: vm
   gather_facts: False
-  roles: 
-    - role: vm_routing_nat
-      delegate_to: proxmox
+  roles:
     - role: vm_startup
       delegate_to: proxmox

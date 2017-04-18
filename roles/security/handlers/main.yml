@@ -1,0 +1,7 @@
+---
+
+- name: Restart ssh
+  service: name=ssh state=restarted
+
+- name: Reload iptables
+  shell: sh "/etc/network/if-pre-up.d/securityload"

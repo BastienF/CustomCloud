@@ -3,3 +3,4 @@
 - hosts: host
   roles: 
     - role: host_create_lan
+    - role: security

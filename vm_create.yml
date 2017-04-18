@@ -1,7 +1,10 @@
 ---
 # Setup Proxmox
 - hosts: vm
+  serial: 1
   gather_facts: False
-  roles: 
+  roles:
+    - role: vm_routing_nat
+      delegate_to: proxmox
     - role: vm_create
       delegate_to: proxmox

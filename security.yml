@@ -1,0 +1,5 @@
+---
+# Setup linux security
+- hosts: all
+  roles: 
+    - role: security

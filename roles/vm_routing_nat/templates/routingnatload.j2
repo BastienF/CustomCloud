@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -d {{ routing_nat_iptables_dir }} ]; then
+
+    if [ -f {{ routing_nat_iptables_dir }}/{{ clear_stale_vms_script }} ]; then
+        . {{ routing_nat_iptables_dir }}/{{ clear_stale_vms_script }}
+    fi
+
+    for file in {{ routing_nat_iptables_dir }}/vm*.sh; do
+        [ -f "$file" ] && [ -x "$file" ] && "$file"
+    done
+fi
+exit 0

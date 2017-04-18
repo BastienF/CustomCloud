@@ -1,5 +1,6 @@
 [host]
-proxmox ansible_port=22 ansible_host=5.39.90.137 ansible_user=root
+proxmox ansible_port=22 ansible_host=5.39.90.137 ansible_user=root ports_to_redirect='{tcp: 22, udp: 80}'
 
 [vm]
-201 ansible_port=9022 ansible_host=5.39.90.137 private_ip=192.168.0.21 port_redirect_prefix=90 ports_to_redirect='[22, 80]' iso_os=ubuntu-16.04.2-server-amd64.iso vmid=201 disk_size_go=201 balloon=2048 memory=6144 sockets=4 cores=1
+vm100 vmid=100 ansible_port=9022 ansible_host=5.39.90.137 private_ip=192.168.0.01
+vm101 vmid=101 ansible_port=8022 ansible_host=5.39.90.137 private_ip=192.168.0.02

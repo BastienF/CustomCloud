@@ -1,0 +1,5 @@
+---
+
+- include: fail2ban.yml
+- include: ssh.yml
+- include: firewall.yml

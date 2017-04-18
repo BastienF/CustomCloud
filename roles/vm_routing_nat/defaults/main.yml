@@ -1,0 +1,4 @@
+---
+
+routing_nat_iptables_dir: /etc/routing_nat/
+clear_stale_vms_script: clear_stale_vms.sh
