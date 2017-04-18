@@ -4,3 +4,4 @@
   roles: 
     - role: host_create_lan
     - role: security
+    - role: base_setup

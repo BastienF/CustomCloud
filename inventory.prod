@@ -1,6 +1,6 @@
 [host]
-proxmox ansible_port=22 ansible_host=5.39.90.137 ansible_user=root ports_to_redirect='{tcp: 22, udp: 80}'
+proxmox ansible_port=22
 
 [vm]
-vm100 vmid=100 ansible_port=9022 ansible_host=5.39.90.137 private_ip=192.168.0.01
-vm101 vmid=101 ansible_port=8022 ansible_host=5.39.90.137 private_ip=192.168.0.02
+vm100 vmid=100 ansible_port=9022 private_ip=192.168.0.01
+vm101 vmid=101 ansible_port=8022 private_ip=192.168.0.02

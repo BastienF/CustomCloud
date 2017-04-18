@@ -3,4 +3,6 @@
 # Those variables are overridden by either `all-XXX` or more narrowed down groups
 
 public_ip: 5.39.90.137
+ansible_user: ansible
+ansible_host: "{{public_ip}}"
 kvm_node: ns3278574
