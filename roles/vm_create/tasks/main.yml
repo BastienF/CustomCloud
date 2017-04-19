@@ -4,6 +4,7 @@
   shell: qm status {{ vmid }} | grep -v "Configuration file .* does not exist"
   register: vm_already_exist_test
   changed_when: false
+  ignore_errors: true
   become: true
 
 - set_fact:
