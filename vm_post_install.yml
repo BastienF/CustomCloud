@@ -1,0 +1,6 @@
+---
+
+- hosts: vm
+  roles:
+    - role: base_setup
+    - role: security

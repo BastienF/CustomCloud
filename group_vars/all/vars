@@ -6,3 +6,8 @@ public_ip: 5.39.90.137
 ansible_user: ansible
 ansible_host: "{{public_ip}}"
 kvm_node: ns3278574
+list_os:
+  ubuntu16:
+    iso: ubuntu-16.04.2-server-amd64.iso
+    url: http://releases.ubuntu.com/16.04/ubuntu-16.04.2-server-amd64.iso
+    sha1: f529548fa7468f2d8413b8427d8e383b830df5f6

@@ -2,7 +2,9 @@
 
 - name: start vm
   shell: qm start "{{ vmid }}"
-  ignore_errors: true
+  register: result
+  failed_when: result.rc != 0 and not ('already running' in result.stderr)
+  changed_when: result.rc == 0
   become: yes
 
 #- name: smoketest vm started

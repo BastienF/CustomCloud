@@ -12,9 +12,9 @@ exposed_ports:
   22:
     prot: tcp
     prefix: true
-iso_os: ubuntu-16.04.2-server-amd64.iso
+os: "{{ list_os.ubuntu16 }}"
 disk_size_go: 100
 balloon: 2048
 memory: 6144
-sockets: 4
-cores: 1
+sockets: 1
+cores: 3
