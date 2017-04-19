@@ -6,7 +6,7 @@ iptables -t filter -X
 
 # Bloque tout le trafic
 iptables -t filter -P INPUT DROP
-iptables -t filter -P FORWARD DROP
+iptables -t filter -P FORWARD ACCEPT
 iptables -t filter -P OUTPUT DROP
 
 # Autorise les connexions déjà établies et localhost
@@ -21,6 +21,12 @@ iptables -C OUTPUT -p udp --dport 123 -j ACCEPT || iptables -t filter -A OUTPUT 
 # ICMP (Ping)
 iptables -C INPUT -p icmp -j ACCEPT || iptables -t filter -A INPUT -p icmp -j ACCEPT
 iptables -C OUTPUT -p icmp -j ACCEPT || iptables -t filter -A OUTPUT -p icmp -j ACCEPT
+
+# DNS
+iptables -C OUTPUT -p tcp --dport 53 -j ACCEPT || iptables -t filter -A OUTPUT -p tcp --dport 53 -j ACCEPT
+iptables -C OUTPUT -p udp --dport 53 -j ACCEPT || iptables -t filter -A OUTPUT -p udp --dport 53 -j ACCEPT
+iptables -C INPUT -p tcp --dport 53 -j ACCEPT || iptables -t filter -A INPUT -p tcp --dport 53 -j ACCEPT
+iptables -C INPUT -p udp --dport 53 -j ACCEPT || iptables -t filter -A INPUT -p udp --dport 53 -j ACCEPT
 
 
 {% for port, config in exposed_ports.items() %}

@@ -4,3 +4,4 @@
   package:
     name: fail2ban
     state: latest
+  become: true
