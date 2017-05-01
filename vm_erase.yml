@@ -1,0 +1,8 @@
+---
+
+- hosts: vm
+  serial: 1
+  gather_facts: False
+  roles:
+    - role: vm_erase
+      delegate_to: "{{ groups['host'] | first }}"

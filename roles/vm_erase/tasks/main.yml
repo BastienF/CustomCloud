@@ -1,0 +1,18 @@
+---
+
+- name: Destroy VM
+  command: virsh destroy "{{ inventory_hostname }}"
+  register: result
+  failed_when: result.rc != 0 and result.rc != 1
+  changed_when: result.rc == 0
+  become: yes
+
+- name: Undefine VM
+  command: virsh undefine "{{ inventory_hostname }}"
+  failed_when: result.rc != 0 and result.rc != 1
+  changed_when: result.rc == 0
+  become: yes
+
+- name: Erase all VM data
+  file: state=absent path="{{ vms_storage_dir }}/{{ inventory_hostname }}"
+  become: yes

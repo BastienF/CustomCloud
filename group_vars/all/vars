@@ -11,6 +11,7 @@ ansible_user: ansible
 ansible_host: "{{public_ip}}"
 dhcp_interface: br0
 host_virt_partition: "/var/lib/vz"
+vms_storage_dir: "{{host_virt_partition}}/hosted"
 list_os:
   ubuntu16_cloudimg:
       iso: xenial-server-cloudimg-amd64-disk1.img
