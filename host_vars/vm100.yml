@@ -1,5 +1,6 @@
 ---
 
+mac_address: "c2:8f:2a:51:f0:8a"
 port_redirect_prefix: 9000
 allowed_range_port: 1000
 exposed_ports:
@@ -12,9 +13,9 @@ exposed_ports:
   22:
     prot: tcp
     prefix: true
-os: "{{ list_os.ubuntu16 }}"
-disk_size_go: 100
-balloon: 2048
-memory: 6144
-sockets: 1
+os: "{{ list_os.ubuntu16_cloudimg }}"
+
 cores: 3
+system_disk_size: 30G
+data_disk_size: 100G
+base_memory: 2048

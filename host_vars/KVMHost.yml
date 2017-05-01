@@ -10,6 +10,3 @@ exposed_ports:
   22:
     prot: tcp
     prefix: false
-  8006:
-    prot: tcp
-    prefix: false

@@ -1,10 +1,24 @@
 ---
-# Setup Proxmox
+
+- hosts: host
+  roles:
+    - role: host_conf_virt_network
+    - role: dhcp
+
 - hosts: vm
   serial: 1
   gather_facts: False
+  pre_tasks:
+      - name: check if VM exists
+        become: yes
+        delegate_to: "{{ groups['host'] | first }}"
+        shell: virsh list --name --all | grep {{ inventory_hostname }}
+        register: vm_check_result
+        changed_when: false
+        failed_when: false
   roles:
     - role: vm_routing_nat
-      delegate_to: proxmox
-    - role: vm_create
-      delegate_to: proxmox
+      delegate_to: "{{ groups['host'] | first }}"
+    - role: vm_create_kvm
+      when: vm_check_result.rc == 1
+      delegate_to: "{{ groups['host'] | first }}"

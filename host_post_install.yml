@@ -1,7 +1,8 @@
 ---
-# Setup Proxmox
+
 - hosts: host
-  roles: 
-    - role: host_create_lan
-    - role: security
+  roles:
     - role: base_setup
+    - role: host_kvm_setup
+    - role: host_conf_virt_network
+    - role: security

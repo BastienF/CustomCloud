@@ -1,0 +1,5 @@
+---
+
+- name: restart br0
+  become: true
+  shell: ifdown br0 && ifup br0

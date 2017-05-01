@@ -4,4 +4,4 @@
   gather_facts: False
   roles:
     - role: vm_startup
-      delegate_to: proxmox
+      delegate_to: "{{ groups['host'] | first }}"

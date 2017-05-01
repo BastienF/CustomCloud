@@ -1,0 +1,21 @@
+default-lease-time         3600;
+max-lease-time             7200;
+
+option subnet-mask         255.255.255.0;
+option broadcast-address   192.168.0.255;
+option routers             192.168.0.254;
+option domain-name-servers 8.8.8.8;
+
+subnet 192.168.0.0 netmask 255.255.255.0 {
+
+{% for hostname in groups['vm'] %}
+{%   if hostvars[hostname]['vm_ip'] is defined %}
+    host {{ hostname }} {
+        hardware ethernet {{ hostvars[hostname]['mac_address'] }};
+        fixed-address {{ hostvars[hostname]['vm_ip'] }};
+    }
+
+{%   endif %}
+{% endfor %}
+
+}

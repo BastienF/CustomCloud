@@ -1,6 +1,5 @@
 [host]
-proxmox ansible_port=22
+KVMHost ansible_port=22
 
 [vm]
-vm100 vmid=100 ansible_port=9022 private_ip=192.168.0.01
-vm101 vmid=101 ansible_port=8022 private_ip=192.168.0.02
+vm100 vmid=100 ansible_port=9022 vm_ip=192.168.0.20

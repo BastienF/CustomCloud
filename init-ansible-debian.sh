@@ -8,5 +8,6 @@ echo 'Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/s
 
 adduser ansible --shell /bin/bash --disabled-password --gecos ""
 mkdir -p /home/ansible/.ssh/
+chown ansible .ssh/
 echo $INITIAL_AUTHORIZED_KEY >> /home/ansible/.ssh/authorized_keys
 echo 'ansible ALL=(ALL) NOPASSWD:ALL' | tee -a /etc/sudoers
