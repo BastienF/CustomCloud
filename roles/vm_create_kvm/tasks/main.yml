@@ -1,0 +1,79 @@
+---
+
+- name: Wipe potential stale traces
+  become: yes
+  file: path="{{ vm_images_dir }}" state=absent
+
+- name: Ensure required dirs are present
+  become: true
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ vm_seeds_user_data|dirname }}"
+    - "{{ vm_seeds_meta_data|dirname }}"
+    - "{{ vm_seeds_image_name|dirname }}"
+    - "{{ vm_system_disk_image|dirname }}"
+    - "{{ vm_data_disk_image|dirname }}"
+    - "{{ os_file|dirname }}"
+
+- name: Templatize host user-data
+  become: yes
+  template:
+    src: user-data.yml.j2
+    dest: "{{ vm_seeds_user_data }}"
+
+- name: Templatize host meta-data
+  become: yes
+  template:
+    src: meta-data.yml.j2
+    dest: "{{ vm_seeds_meta_data }}"
+
+- name: create ci image
+  become: yes
+  command: "{{ item }}"
+  args:
+    chdir: "{{ vm_seeds_meta_data|dirname }}"
+  with_items:
+    - genisoimage -output {{ vm_seeds_image_name }} -volid cidata -joliet -rock .
+  changed_when: true
+
+- name: Test if iso is already downloaded
+  stat: path="{{ os_file }}"
+  register: iso_stat
+
+- name: Download os iso
+  get_url:
+    url: "{{ os.url }}"
+    dest: "{{ os_file }}"
+    checksum: "sha1:{{ os.sha1 }}"
+  when: not iso_stat.stat.exists or iso_stat.stat.checksum != os.sha1
+  become: true
+
+- name: Create qcow2 image (system disc)
+  become: yes
+  command: qemu-img create -f qcow2 -b "{{ os_file }}" "{{ vm_system_disk_image }}" "{{ system_disk_size }}"
+  changed_when: true
+
+- name: Create qcow2 image (data disc)
+  become: yes
+  command: qemu-img create -f qcow2 "{{ vm_data_disk_image }}" "{{ data_disk_size }}"
+  when: data_disk_size is defined
+
+- name: Create / Start VM
+  become: yes
+  command: >
+    virt-install
+        --hvm
+        --name={{ inventory_hostname }}
+        --vcpus={{ cores }}
+        --memballoon virtio
+        --memory={{ base_memory }},maxmemory={{ max_memory }}
+        --os-type=linux
+        --os-variant={{ os.variant }}
+        --import
+        --network bridge=br0,mac={{ mac_address }},model=virtio
+        --disk {{ vm_system_disk_image }},format=qcow2,bus=virtio
+        --noautoconsole {% if data_disk_size is defined %}--disk {{ vm_data_disk_image }},format=qcow2,bus=virtio{% endif %}
+        --disk {{ vm_seeds_image_name }},device=cdrom
+  changed_when: true
