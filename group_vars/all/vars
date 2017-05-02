@@ -18,3 +18,8 @@ list_os:
       url: https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
       sha1: 7a09601844a544b2b9dd9b1485baad789f641a6d
       variant: virtio26
+  centos7_cloudimg:
+      iso: CentOS-7-x86_64-GenericCloud.qcow2
+      url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+      sha1: 7a09601844a544b2b9dd9b1485baad789f641a6d
+      variant: virtio26

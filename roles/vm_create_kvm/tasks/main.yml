@@ -46,8 +46,7 @@
   get_url:
     url: "{{ os.url }}"
     dest: "{{ os_file }}"
-    checksum: "sha1:{{ os.sha1 }}"
-  when: not iso_stat.stat.exists or iso_stat.stat.checksum != os.sha1
+  when: not iso_stat.stat.exists
   become: true
 
 - name: Create qcow2 image (system disc)
@@ -68,7 +67,7 @@
         --name={{ inventory_hostname }}
         --vcpus={{ cores }}
         --memballoon virtio
-        --memory={{ base_memory }},maxmemory={{ max_memory }}
+        --memory={{ base_memory }}
         --os-type=linux
         --os-variant={{ os.variant }}
         --import

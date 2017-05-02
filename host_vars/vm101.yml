@@ -1,0 +1,21 @@
+---
+
+mac_address: "c2:8f:2a:51:f0:8b"
+port_redirect_prefix: 8000
+allowed_range_port: 1000
+exposed_ports:
+  80:
+    prot: tcp
+    prefix: true
+  443:
+    prot: tcp
+    prefix: true
+  22:
+    prot: tcp
+    prefix: true
+os: "{{ list_os.centos7_cloudimg }}"
+
+cores: 3
+system_disk_size: 30G
+data_disk_size: 100G
+base_memory: 2048
