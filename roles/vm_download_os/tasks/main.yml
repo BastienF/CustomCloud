@@ -1,0 +1,16 @@
+---
+
+- include: "{{ os.name }}-checksum.yml"
+  static: no
+
+- name: Test if iso is already downloaded
+  stat: path="{{ os_file }}" checksum_algorithm="{{ os.checksum.algo}}"
+  register: iso_stat
+
+- name: Download os iso
+  get_url:
+    url: "{{ os.url }}"
+    dest: "{{ os_file }}"
+    checksum: "{{ os.checksum.algo}}:{{ current_checksum }}"
+  when: not iso_stat.stat.exists or iso_stat.stat.checksum != current_checksum
+  become: true

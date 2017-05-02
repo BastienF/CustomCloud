@@ -1,0 +1,9 @@
+---
+
+- name: Find current checksum
+  shell: curl "{{ os.checksum.url }}" | grep "{{ os.iso }}$" | cut -d ' ' -f1
+  register: curled_checksum
+  changed_when: false
+
+- name: Set current_checksum var
+  set_fact: current_checksum="{{ curled_checksum.stdout }}"
