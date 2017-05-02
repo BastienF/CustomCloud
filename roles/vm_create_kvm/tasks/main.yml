@@ -1,8 +1,12 @@
 ---
 
-- name: Wipe potential stale traces
-  become: yes
-  file: path="{{ vm_images_dir }}" state=absent
+- name: Test if files from stale VM exist
+  stat: path="{{ vm_images_dir }}"
+  register: vm_dir_stat
+
+- name: Fail if files from stale VM exist
+  fail: msg="VM directory already exists ({{ vm_images_dir }}) use vm_erase playbook to clean stale files"
+  when: vm_dir_stat.stat.isdir is defined
 
 - name: Ensure required dirs are present
   become: true
