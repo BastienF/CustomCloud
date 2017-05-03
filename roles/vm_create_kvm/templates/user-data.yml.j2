@@ -27,7 +27,9 @@ write_files:
 runcmd:
   - systemctl restart networking
 {% if data_disk_size is defined %}
+{% if data_disk_already_exists == false %}
   - mkfs.ext4 -L /data /dev/vdb
+{% endif %}
   - mkdir /data
   - echo "/dev/vdb /data ext4 user,defaults 0 2" >> /etc/fstab
   - mount /dev/vdb /data

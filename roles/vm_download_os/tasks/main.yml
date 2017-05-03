@@ -1,5 +1,13 @@
 ---
 
+- name: Ensure required dirs are present
+  become: true
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ os_file|dirname }}"
+
 - include: "{{ os.name }}-checksum.yml"
   static: no
 

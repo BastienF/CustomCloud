@@ -6,7 +6,7 @@
 
 - name: Fail if files from stale VM exist
   fail: msg="VM directory already exists ({{ vm_images_dir }}) use vm_erase playbook to clean stale files"
-  when: vm_dir_stat.stat.isdir is defined
+  when: vm_dir_stat.stat.exists
 
 - name: Ensure required dirs are present
   become: true
@@ -20,6 +20,23 @@
     - "{{ vm_system_disk_image|dirname }}"
     - "{{ vm_data_disk_image|dirname }}"
     - "{{ os_file|dirname }}"
+
+- name: Create qcow2 image (system disc)
+  become: yes
+  command: qemu-img create -f qcow2 -b "{{ os_file }}" "{{ vm_system_disk_image }}" "{{ system_disk_size }}"
+  changed_when: true
+
+- name: Test if data disk already exists
+  stat: path="{{ vm_data_disk_image }}"
+  register: data_disk_stat
+
+- name: Set fact data_disk_already_exists
+  set_fact: data_disk_already_exists="{{ data_disk_stat.stat.exists }}"
+
+- name: Create qcow2 image (data disc)
+  become: yes
+  command: qemu-img create -f qcow2 "{{ vm_data_disk_image }}" "{{ data_disk_size }}"
+  when: data_disk_size is defined and not data_disk_already_exists
 
 - name: Templatize host user-data
   become: yes
@@ -42,27 +59,6 @@
     - genisoimage -output {{ vm_seeds_image_name }} -volid cidata -joliet -rock .
   changed_when: true
 
-- name: Test if iso is already downloaded
-  stat: path="{{ os_file }}"
-  register: iso_stat
-
-- name: Download os iso
-  get_url:
-    url: "{{ os.url }}"
-    dest: "{{ os_file }}"
-  when: not iso_stat.stat.exists
-  become: true
-
-- name: Create qcow2 image (system disc)
-  become: yes
-  command: qemu-img create -f qcow2 -b "{{ os_file }}" "{{ vm_system_disk_image }}" "{{ system_disk_size }}"
-  changed_when: true
-
-- name: Create qcow2 image (data disc)
-  become: yes
-  command: qemu-img create -f qcow2 "{{ vm_data_disk_image }}" "{{ data_disk_size }}"
-  when: data_disk_size is defined
-
 - name: Create / Start VM
   become: yes
   command: >
@@ -80,3 +76,7 @@
         --noautoconsole {% if data_disk_size is defined %}--disk {{ vm_data_disk_image }},format=qcow2,bus=virtio{% endif %}
         --disk {{ vm_seeds_image_name }},device=cdrom
   changed_when: true
+
+        #--noautoconsole {% if data_disk_size is defined %}--disk {{ vm_data_disk_image }},format=qcow2,bus=scsi,discard=unmap{% endif %}
+#        --controller type=scsi,model=virtio-scsi \
+        #--disk {{ vm_system_disk_image }},bus=scsi,discard='unmap',format=qcow2
