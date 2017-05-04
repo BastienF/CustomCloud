@@ -16,3 +16,8 @@
 - name: Erase all VM data
   file: state=absent path="{{ vms_storage_dir }}/{{ inventory_hostname }}"
   become: yes
+
+- name: Erase data disk
+  file: state=absent path="{{ vm_data_disk_image }}"
+  when: erase_data_disk | default(false)
+  become: yes
