@@ -64,6 +64,7 @@
   command: >
     virt-install
         --hvm
+        --controller type=scsi,model=virtio-scsi
         --name={{ inventory_hostname }}
         --vcpus={{ cores }}
         --memballoon virtio
@@ -72,11 +73,7 @@
         --os-variant={{ os.variant }}
         --import
         --network bridge=br0,mac={{ mac_address }},model=virtio
-        --disk {{ vm_system_disk_image }},format=qcow2,bus=virtio
-        --noautoconsole {% if data_disk_size is defined %}--disk {{ vm_data_disk_image }},format=qcow2,bus=virtio{% endif %}
+        --disk {{ vm_system_disk_image }},format=qcow2,discard=unmap,bus=scsi
+        --noautoconsole {% if data_disk_size is defined %}--disk {{ vm_data_disk_image }},format=qcow2,discard=unmap,bus=scsi{% endif %}
         --disk {{ vm_seeds_image_name }},device=cdrom
   changed_when: true
-
-        #--noautoconsole {% if data_disk_size is defined %}--disk {{ vm_data_disk_image }},format=qcow2,bus=scsi,discard=unmap{% endif %}
-#        --controller type=scsi,model=virtio-scsi \
-        #--disk {{ vm_system_disk_image }},bus=scsi,discard='unmap',format=qcow2

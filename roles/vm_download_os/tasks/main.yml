@@ -20,5 +20,5 @@
     url: "{{ os.url }}"
     dest: "{{ os_file }}"
     checksum: "{{ os.checksum.algo}}:{{ current_checksum }}"
-  when: not iso_stat.stat.exists or iso_stat.stat.checksum != current_checksum
+  when: not iso_stat.stat.exists or ((not (stale_os_ok | default(false))) and iso_stat.stat.checksum != current_checksum)
   become: true
