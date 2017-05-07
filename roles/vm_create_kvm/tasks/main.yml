@@ -77,3 +77,6 @@
         --noautoconsole {% if data_disk_size is defined %}--disk {{ vm_data_disk_image }},format=qcow2,discard=unmap,bus=scsi{% endif %}
         --disk {{ vm_seeds_image_name }},device=cdrom
   changed_when: true
+
+- name: Waiting for boot
+  local_action: wait_for host={{ ansible_ssh_host }} port={{ ansible_port }} state=started
