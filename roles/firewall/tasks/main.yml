@@ -1,0 +1,22 @@
+---
+
+- name: Set firewall init script location debian
+  set_fact: init_script="/etc/network/if-pre-up.d/securityload"
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Set firewall init script location centos
+  set_fact: init_script="/sbin/ifup-local"
+  when: ansible_distribution == 'CentOS'
+
+- name: Load security iptable script on startup
+  template: src="securityload.j2" dest="{{ init_script }}" mode="u=rwx,g=rx,o=rx"
+  become: true
+
+- name: create security iptables script
+  template: src="security_iptables_script.sh.j2" dest="{{ security_iptables_script }}" mode="u=rwx,g=rx,o=rx"
+  notify:
+    - Reload iptables
+    - Reboot for first initialisation
+  changed_when: true
+  become: true
+
