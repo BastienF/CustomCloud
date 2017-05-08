@@ -17,6 +17,5 @@
   notify:
     - Reload iptables
     - Reboot for first initialisation
-  changed_when: true
   become: true
 

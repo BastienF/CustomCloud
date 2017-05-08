@@ -5,3 +5,10 @@
     name: fail2ban
     state: latest
   become: true
+
+- name: start fail2ban
+  service:
+    name: fail2ban
+    enabled: yes
+    state: started
+  become: true

@@ -1,6 +1,8 @@
 [host]
-KVMHost ansible_port=22
+KVMHost     ansible_port=22
 
 [vm]
-vm100 vmid=100 ansible_port=9022 vm_ip=192.168.0.20
-vm101 vmid=101 ansible_port=8022 vm_ip=192.168.0.21
+bfiven      ansible_port=2022 vm_ip=192.168.0.10
+bfiven_dev  ansible_port=6022 vm_ip=192.168.0.11
+bbright     ansible_port=4022 vm_ip=192.168.0.12
+bbright_dev ansible_port=7022 vm_ip=192.168.0.13

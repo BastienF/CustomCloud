@@ -1,4 +1,4 @@
 #!/bin/sh
 shopt -s extglob
 cd {{ routing_nat_iptables_dir }}
-rm !({% for vm in groups['vm'] %}vm{{hostvars[vm]['vmid']}}.sh|{% endfor %}{{ clear_stale_vms_script }})
+rm !({% for vm in groups['vm'] %}vm-{{ vm }}.sh|{% endfor %}{{ clear_stale_vms_script }})

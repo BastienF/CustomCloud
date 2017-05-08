@@ -1,0 +1,25 @@
+---
+
+users:
+  bbr:
+    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSvqq0RlfV5gkuhgTlZEe5zP9f8ctqTRvo245tfjEEEXuLrCqP/JKcMU514EAvaj6ZkFYo/6m9B++oxQxbY14Vff8sbWe6obL0OdFpMufZk3ks6JO/B4DNQPhKPQy8RykwZsP+5kW3JhgNVtTpvdtfCsIrJ5+aFK5G2JCeiO7M3xZxaCbufqmQdO7qNjOezQ7We/A+tCLOLkxAp+no/HshGVcJ37rv+7H1PIN/n/8GbG3UjyAr09DIwFe2svpMQ8Lhv1sdioDygGD6QAEILa8bwyFjkUCavzgybivgdjOqaSJZ6aWUi/xcfaAIBKvXcF7TnQa9eDWJ2XnoPms+bPbIs54ru8x10qiqwz4W2DFnfWq0UdN+/vlgA7lGJO4ng4xyQfKGF+Std17KVUwoZbN0oguG05lNi2+jByIOuUpqerHYyl2H8zyICy/XP/0ypR3MAjWC56/XHv1QspKKf955EA7FjYfT7IyeUdXkqE0VkhcKTImnxYQjc7k9cksi/oUBwC4vLDNUFM9D/BFcR+DvCrm7JTSqHiQJatLIkPUZJTtJ65wImgEuDu9aC9GJg9Isr23MDg/FFgq7B2NTeo2S2aOO4vAH8R3FG7IOBdizpYNdNIpUB+PDhbiFLxbLClhNxKFzZRYoVTEX7UZoGqpa1bZEPTiTTAatXHMRUWY4lQ== Maastiff@OCTO-BBR"
+
+mac_address: "c2:8f:2a:51:f0:8d"
+port_redirect_prefix: 7000
+allowed_range_port: 1000
+exposed_ports:
+  80:
+    prot: tcp
+    prefix: true
+  443:
+    prot: tcp
+    prefix: true
+  22:
+    prot: tcp
+    prefix: true
+os: "{{ list_os.centos7_cloudimg }}"
+
+cores: 1
+system_disk_size: 30G
+data_disk_size: 20G
+base_memory: 512

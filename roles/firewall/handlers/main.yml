@@ -14,7 +14,7 @@
 
 
 - name: Reboot for first initialisation
-  shell: ( sleep 3 && nohup reboot &)
+  shell: reboot
   become: true
   async: 0
   poll: 0

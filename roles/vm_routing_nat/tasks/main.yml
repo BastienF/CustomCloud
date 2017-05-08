@@ -14,6 +14,9 @@
   become: true
 
 - name: create iptables script for this vm
-  template: src="vm_iptables_script.j2" dest="{{ routing_nat_iptables_dir }}/vm{{ vmid }}.sh" mode="u=rwx,g=rx,o=rx"
+  template: src="vm_iptables_script.j2" dest="{{ routing_nat_iptables_dir }}/vm-{{ inventory_hostname }}.sh" mode="u=rwx,g=rx,o=rx"
   notify: Reload iptables
   become: true
+
+- name: flush to allow ssh on new VM
+  meta: flush_handlers
