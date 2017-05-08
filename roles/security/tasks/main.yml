@@ -1,5 +1,8 @@
 ---
 
-- include: fail2ban.yml
 - include: ssh.yml
-- include: firewall.yml
+- include: fail2ban.yml
+- include_role:
+    name: firewall
+  vars:
+    reboot: true

@@ -3,7 +3,3 @@
 - name: Restart ssh
   service: name=ssh state=restarted
   become: true
-
-- name: Reload iptables
-  shell: sh "/etc/network/if-pre-up.d/securityload"
-  become: true
