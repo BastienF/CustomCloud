@@ -1,4 +1,2 @@
 base_packages:
-  - htop
-  - ncdu
   - curl
