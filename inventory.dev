@@ -1,0 +1,12 @@
+[all:vars]
+public_ip=192.168.10.10
+ansible_host="{{public_ip}}"
+
+[host]
+KVMHost     ansible_port=22 external_interface=enp0s3
+
+[vm]
+bfiven      ansible_port=2022 vm_ip=192.168.0.10
+bfivendev   ansible_port=6022 vm_ip=192.168.0.11
+bbright     ansible_port=4022 vm_ip=192.168.0.12
+bbrightdev  ansible_port=7022 vm_ip=192.168.0.13
