@@ -1,8 +1,12 @@
 ---
+- hosts: vm
+  serial: 1
+  gather_facts: False
+  roles:
+    - role: vm_routing_nat
+      delegate_to: "{{ groups['host'] | first }}"
 
 - hosts: vm
   serial: 1
   roles:
-    - role: vm_routing_nat
-      delegate_to: "{{ groups['host'] | first }}"
     - role: firewall
