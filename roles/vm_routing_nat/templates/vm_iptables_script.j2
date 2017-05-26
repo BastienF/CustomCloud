@@ -1,6 +1,6 @@
 #!/bin/sh
 
-{% set rule_comment = ["vm ", inventory_hostname, " routing"]|join %}
+{% set rule_comment = ["CustomCloud: vm ", inventory_hostname, " routing"]|join %}
 
 iptables-save -t nat | grep 'comment "{{ rule_comment }}"' | sed -e 's/^-A /iptables -t nat -D /g' | sh
 iptables-save -t filter | grep 'comment "{{ rule_comment }}"' | sed -e 's/^-A /iptables -t filter -D /g' | sh
