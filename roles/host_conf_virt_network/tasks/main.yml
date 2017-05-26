@@ -14,7 +14,7 @@
       bridge_fd 0
       post-up echo 1 > /proc/sys/net/ipv4/ip_forward
       post-up iptables -t nat -A POSTROUTING -s '192.168.0.0/24' -o br0 -j MASQUERADE
-      post-up iptables -t nat -A POSTROUTING -o {{ external_interface }} -j MASQUERADE
+      post-up iptables -t nat -A POSTROUTING -o {{ host_bridged_interface }} -j MASQUERADE
       post-down iptables -t nat -D POSTROUTING -s '192.168.0.0/24' -o br0 -j MASQUERADE
   become: true
   notify: restart br0
