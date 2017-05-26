@@ -10,7 +10,7 @@ allowed_range_port: 2000
 exposed_ports:
   80:
     prot: tcp
-    prefix: true
+    prefix: false
   443:
     prot: tcp
     prefix: true
