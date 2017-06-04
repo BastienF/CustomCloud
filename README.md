@@ -24,7 +24,7 @@ To setup dev env :
 To stop or destroy dev env :
 - Run from ./dev_env : `vagrant stop` or `vagrant destroy`
 
-###Cloud configuration
+### Cloud configuration
 1. Initialisation of KVM Host (only Ubuntu server 16.04 certified)
 
 ```
