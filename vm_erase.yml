@@ -6,3 +6,13 @@
   roles:
     - role: vm_erase
       delegate_to: "{{ groups['host'] | first }}"
+
+- hosts: vm
+  serial: 1
+  gather_facts: False
+  tasks:
+    - name: SSH forget old vm
+      shell: "ssh-keygen -R [{{ ansible_host }}]:{{ ansible_port }}"
+      register: result
+      delegate_to: localhost
+      changed_when: result.stderr.find("not found in") == -1
