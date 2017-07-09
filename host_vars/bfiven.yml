@@ -8,12 +8,27 @@ mac_address: "c2:8f:2a:51:f0:8a"
 port_redirect_prefix: 2000
 allowed_range_port: 2000
 exposed_ports:
+  25:
+    prot: tcp
+    prefix: false
+  587:
+    prot: tcp
+    prefix: false
+  143:
+    prot: tcp
+    prefix: false
+  993:
+    prot: tcp
+    prefix: false
+  4190:
+    prot: tcp
+    prefix: false
   80:
     prot: tcp
     prefix: false
   443:
     prot: tcp
-    prefix: true
+    prefix: false
   22:
     prot: tcp
     prefix: true
