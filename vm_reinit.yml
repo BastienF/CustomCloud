@@ -1,0 +1,7 @@
+---
+
+- include: vm_erase.yml
+
+- include: vm_create.yml
+
+- include: vm_post_install.yml
