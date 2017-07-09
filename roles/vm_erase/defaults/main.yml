@@ -2,3 +2,4 @@
 
 vm_data_images_dir: "{{ vms_storage_dir }}/data/{{ inventory_hostname }}"
 vm_data_disk_image: "{{ vm_data_images_dir }}/{{ inventory_hostname }}-data.qcow2"
+erase_data_disk: False
