@@ -27,7 +27,10 @@
   changed_when: true
 
 - name: Test if data disk already exists
-  stat: path="{{ vm_data_disk_image }}"
+  stat:
+    path: "{{ vm_data_disk_image }}"
+    get_checksum: False
+    get_md5: False
   register: data_disk_stat
 
 - name: Set fact data_disk_already_exists
