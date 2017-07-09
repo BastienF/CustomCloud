@@ -12,7 +12,7 @@
       - name: check if VM exists
         become: yes
         delegate_to: "{{ groups['host'] | first }}"
-        shell: virsh list --name --all | grep {{ inventory_hostname }}
+        shell: virsh list --name --all | grep '^{{ inventory_hostname }}$'
         register: vm_check_result
         changed_when: false
         failed_when: false
