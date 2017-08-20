@@ -1,0 +1,19 @@
+---
+
+- name: Ensure required dirs are present
+  become: true
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ vm_images_dir }}"
+
+- include: "{{ os }}-checksum.yml"
+  static: no
+
+- name: Download OS image
+  become: true
+  get_url:
+    url: "{{ os_image.url }}"
+    dest: "{{ os_file }}"
+    checksum: "{{ os_force_update|bool|ternary(os_image.checksum.algo + ':' + current_checksum, omit) }}"

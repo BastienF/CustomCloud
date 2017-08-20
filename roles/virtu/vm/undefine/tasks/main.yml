@@ -1,0 +1,14 @@
+---
+
+- name: Destroy VM
+  become: true
+  command: virsh destroy "{{ inventory_hostname }}"
+  register: result
+  failed_when: result.rc != 0 and result.rc != 1
+  changed_when: result.rc == 0
+
+- name: Undefine VM
+  become: true
+  command: virsh undefine "{{ inventory_hostname }}"
+  failed_when: result.rc != 0 and result.rc != 1
+  changed_when: result.rc == 0

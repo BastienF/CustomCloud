@@ -1,0 +1,19 @@
+---
+
+# vm_storage_base_dir: <root directory for storing VMs> (mandatory)
+
+# VM configuration
+# vm_ip: 192.168.0.12 (mandatory for dhcp role)
+# mac_address: 'c2:8f:2a:51:f0:8c' (mandatory)
+# os: ubuntu16_cloudimg (mandatory, must be an entry of os_images - see download-os/defaults/main.yml)
+# cores: 3 (mandatory)
+# system_disk_size: 30G (mandatory)
+# data_disk_size: 800G (optional, no data disk if undefined)
+# memory: 4096 (mandatory, in MB)
+
+# cloud-init configuration
+users: []
+# users: (mandatory)
+#   <username>:
+#     ssh_keys:
+#       - '...'

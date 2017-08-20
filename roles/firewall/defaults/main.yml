@@ -1,2 +1,0 @@
-security_iptables_script: /etc/security_iptables.sh
-reboot: false

@@ -1,0 +1,4 @@
+---
+
+dependencies:
+  - role: reboot_handler

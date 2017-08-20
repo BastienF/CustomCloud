@@ -1,0 +1,69 @@
+#!/bin/bash
+
+## Détricote ce qui a pu être fait avant
+# Débloque les traffics entrant et sortants
+iptables -t filter -P INPUT ACCEPT
+iptables -t filter -P FORWARD ACCEPT
+iptables -t filter -P OUTPUT ACCEPT
+
+# Supprime le passage obligé par les chaines firewall
+iptables -t filter -D INPUT -j firewall_INPUT
+iptables -t filter -D FORWARD -j firewall_FORWARD
+iptables -t filter -D OUTPUT -j firewall_OUTPUT
+
+# Flush et supprime les chaines de traitement
+iptables -t filter -F firewall_INPUT
+iptables -t filter -F firewall_FORWARD
+iptables -t filter -F firewall_OUTPUT
+iptables -t filter -X firewall_INPUT
+iptables -t filter -X firewall_FORWARD
+iptables -t filter -X firewall_OUTPUT
+
+# Crée les chaines de traitement
+iptables -t filter -N firewall_INPUT
+iptables -t filter -N firewall_FORWARD
+iptables -t filter -N firewall_OUTPUT
+
+## Met en place les règles
+# Autorise les connexions déjà établies et localhost
+iptables -t filter -C firewall_INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables -A firewall_INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+# iptables -t filter -C firewall_OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT || iptables -A firewall_OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -t filter -C firewall_INPUT -i lo -j ACCEPT || iptables -t filter -A firewall_INPUT -i lo -j ACCEPT
+# iptables -t filter -C firewall_OUTPUT -o lo -j ACCEPT || iptables -t filter -A firewall_OUTPUT -o lo -j ACCEPT
+
+
+# NTP (horloge du serveur)
+# iptables -t filter -C firewall_OUTPUT -p udp --dport 123 -j ACCEPT || iptables -t filter -A firewall_OUTPUT -p udp --dport 123 -j ACCEPT
+
+# ICMP (Ping)
+iptables -t filter -C firewall_INPUT -p icmp -j ACCEPT || iptables -t filter -A firewall_INPUT -p icmp -j ACCEPT
+# iptables -t filter -C firewall_OUTPUT -p icmp -j ACCEPT || iptables -t filter -A firewall_OUTPUT -p icmp -j ACCEPT
+
+# DNS
+# iptables -t filter -C firewall_OUTPUT -p tcp --dport 53 -j ACCEPT || iptables -t filter -A firewall_OUTPUT -p tcp --dport 53 -j ACCEPT
+# iptables -t filter -C firewall_OUTPUT -p udp --dport 53 -j ACCEPT || iptables -t filter -A firewall_OUTPUT -p udp --dport 53 -j ACCEPT
+iptables -t filter -C firewall_INPUT -p tcp --dport 53 -j ACCEPT || iptables -t filter -A firewall_INPUT -p tcp --dport 53 -j ACCEPT
+iptables -t filter -C firewall_INPUT -p udp --dport 53 -j ACCEPT || iptables -t filter -A firewall_INPUT -p udp --dport 53 -j ACCEPT
+
+
+# Ouvre les ports exposés
+{% for port, config in firewall_exposed_ports|dictsort %}
+iptables -t filter -C firewall_INPUT -p {{ config.proto }} --dport {{ port }} -j ACCEPT || iptables -t filter -A firewall_INPUT -p {{ config.proto }} --dport {{ port }} -j ACCEPT
+# iptables -t filter -C firewall_OUTPUT -p {{ config.proto }} --dport {{ port }} -j ACCEPT || iptables -t filter -A firewall_OUTPUT -p {{ config.proto }} --dport {{ port }} -j ACCEPT
+{% endfor %}
+
+
+# Retourne finalement à la chaine principale
+iptables -t filter -C firewall_INPUT -j RETURN || iptables -t filter -A firewall_INPUT -j RETURN
+iptables -t filter -C firewall_FORWARD -j RETURN || iptables -t filter -A firewall_FORWARD -j RETURN
+iptables -t filter -C firewall_OUTPUT -j RETURN || iptables -t filter -A firewall_OUTPUT -j RETURN
+
+# Ajoute un passage obligé par les chaines firewall
+iptables -t filter -C INPUT -j firewall_INPUT || iptables -t filter -A INPUT -j firewall_INPUT
+iptables -t filter -C FORWARD -j firewall_FORWARD || iptables -t filter -A FORWARD -j firewall_FORWARD
+iptables -t filter -C OUTPUT -j firewall_OUTPUT || iptables -t filter -A OUTPUT -j firewall_OUTPUT
+
+
+# Bloque tout le trafic entrant et sortant
+iptables -t filter -P INPUT DROP
+# iptables -t filter -P OUTPUT DROP

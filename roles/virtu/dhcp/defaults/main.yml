@@ -1,0 +1,21 @@
+---
+
+# dhcp_domain_name_servers: <list of dns servers to push over DHCP>
+
+# all name servers used by the host that have public IPs
+# dhcp_domain_name_servers: "{{ ansible_dns.nameservers|map('ipaddr', 'public')| select | list }}"
+
+# another possible default, broader but a bit hacky, all name servers used
+# by the host except those on the local loop
+dhcp_domain_name_servers: "{{ ansible_dns.nameservers | difference(ansible_dns.nameservers|map('ipaddr', '127.0.0.0/8')|select) }}"
+
+# simple example
+# dhcp_domain_name_servers:
+#   - 213.186.33.99
+
+# dhcp_domain_name_servers: <list of search domains to push over DHCP>
+
+dhcp_domain_search: "{{ ansible_dns.search }}"
+# simple example
+# dhcp_domain_search:
+#   - example.net

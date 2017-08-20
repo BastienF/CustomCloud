@@ -1,0 +1,5 @@
+---
+
+# vm_storage_base_dir: <mandatory>
+
+vm_erase_data_disk: false

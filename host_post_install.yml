@@ -1,8 +1,0 @@
----
-
-- hosts: host
-  roles:
-    - role: base_setup
-    - role: security
-    - role: host_kvm_setup
-    - role: host_conf_virt_network

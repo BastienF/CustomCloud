@@ -1,0 +1,5 @@
+---
+
+vm_instance_dir: "{{ vm_storage_base_dir }}/instances/{{ inventory_hostname }}"
+vm_disks_dir: "{{ vm_instance_dir }}/disks"
+vm_seeds_dir: "{{ vm_instance_dir }}/seeds"

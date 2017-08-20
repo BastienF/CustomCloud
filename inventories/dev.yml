@@ -1,0 +1,39 @@
+---
+
+all:
+  vars:
+    ansible_host: 192.168.10.10
+
+host:
+  hosts:
+    cloud3b:
+
+vms:
+  hosts:
+    bbright:
+      vm_ip: 192.168.0.10
+      ansible_port: 5022
+      mac_address: 'c2:8f:2a:51:f0:8a'
+      os: centos7_cloudimg
+      cores: 2
+      memory: 512
+      system_disk_size: 30G
+      data_disk_size: 20G
+    bfiven:
+      vm_ip: 192.168.0.11
+      ansible_port: 10022
+      mac_address: 'c2:8f:2a:51:f0:8b'
+      os: ubuntu16_cloudimg
+      cores: 2
+      memory: 512
+      system_disk_size: 30G
+      data_disk_size: 20G
+    bgarbage:
+      vm_ip: 192.168.0.12
+      ansible_port: 15022
+      mac_address: 'c2:8f:2a:51:f0:8c'
+      os: ubuntu16_cloudimg
+      cores: 2
+      memory: 512
+      system_disk_size: 30G
+      data_disk_size: 20G

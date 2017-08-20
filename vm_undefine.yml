@@ -1,0 +1,16 @@
+---
+
+- hosts: vms
+  serial: 1
+  roles:
+    - role: virtu/vm/undefine
+      tags: virtu/vm/undefine
+      delegate_to: "{{ groups['host'] | first }}"
+
+- hosts: vms
+  serial: 1
+  tasks:
+    - name: SSH forget old vm
+      local_action: shell ssh-keygen -R [{{ ansible_host }}]:{{ ansible_port }}
+      register: result
+      changed_when: result.stderr.find("not found in") == -1

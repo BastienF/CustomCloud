@@ -1,0 +1,81 @@
+---
+
+# - name: Test if files from stale VM exist
+#   stat:
+#     path: "{{ vm_instance_dir }}"
+#   register: vm_dir_stat
+#
+# - name: Fail if files from stale VM exist
+#   fail:
+#     msg: "VM directory already exists ({{ vm_images_dir }}) use vm_erase playbook to clean stale files"
+#   when: vm_dir_stat.stat.exists
+
+- name: Ensure required dirs are present
+  become: true
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ vm_instance_dir }}"
+    - "{{ vm_disks_dir }}"
+    - "{{ vm_seeds_dir }}"
+
+- name: Create qcow2 image (system disc)
+  become: true
+  command: qemu-img create -f qcow2 -b "{{ os_file }}" "{{ vm_disks_dir }}/root.qcow2" "{{ system_disk_size }}"
+  args:
+    creates: "{{ vm_disks_dir }}/root.qcow2"
+
+- name: Create qcow2 image (data disc)
+  become: true
+  command: qemu-img create -f qcow2 "{{ vm_disks_dir }}/data.qcow2" "{{ data_disk_size }}"
+  args:
+    creates: "{{ vm_disks_dir }}/data.qcow2"
+  when: data_disk_size is defined
+
+- name: Templatize host user-data and meta-data
+  become: true
+  template:
+    src: "{{ item }}.yml.j2"
+    dest: "{{ vm_seeds_dir }}/{{ item }}"
+  with_items:
+    - user-data
+    - meta-data
+  register: seeds_templating
+
+- name: create cloud-init image
+  become: true
+  command: genisoimage -output "{{ vm_disks_dir }}/cidata.iso" -volid cidata -joliet -rock .
+  args:
+    chdir: "{{ vm_seeds_dir }}"
+    creates: "{{ seeds_templating|changed|ternary(omit, vm_disks_dir + '/cidata.iso') }}"
+
+- name: Create / Start VM
+  become: true
+  command: >
+    virt-install
+        --hvm
+        --controller type=scsi,model=virtio-scsi
+        --name={{ inventory_hostname }}
+        --vcpus={{ cores }}
+        --memballoon virtio
+        --memory={{ memory }}
+        --os-type=linux
+        --os-variant={{ os_image.variant }}
+        --import
+        --network bridge=br0,mac={{ mac_address }},model=virtio
+        --disk {{ vm_disks_dir }}/root.qcow2,format=qcow2,discard=unmap,bus=scsi
+        --noautoconsole {% if data_disk_size is defined %}--disk {{ vm_disks_dir }}/data.qcow2,format=qcow2,discard=unmap,bus=scsi{% endif %}
+        --disk {{ vm_disks_dir }}/cidata.iso,device=cdrom
+  changed_when: true
+
+- name: Wait for port 22
+  wait_for:
+    host: "{{ vm_ip }}"
+    port: 22
+    state: started
+
+# - name: Wait until the VM is reachable with Ansible
+#   delegate_to: "{{ inventory_hostname }}"
+#   wait_for_connection:
+#     timeout: 600

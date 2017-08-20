@@ -1,5 +1,0 @@
----
-
-- name: Reload iptables
-  shell: /bin/bash "/etc/network/if-pre-up.d/routingnatload"
-  become: true

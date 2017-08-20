@@ -1,0 +1,19 @@
+---
+
+- name: Erase all VM seeds and disks except data
+  become: true
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ vm_seeds_dir }}/user-data"
+    - "{{ vm_seeds_dir }}/meta-data"
+    - "{{ vm_disks_dir }}/cidata.iso"
+    - "{{ vm_disks_dir }}/root.qcow2"
+
+- name: Erase data disk and the whole VM directory
+  become: true
+  file:
+    path: "{{ vm_instance_dir }}"
+    state: absent
+  when: vm_erase_data_disk|bool

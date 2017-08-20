@@ -1,3 +1,0 @@
----
-
-os_file: "{{ vms_storage_dir }}/iso/{{ os.iso }}"

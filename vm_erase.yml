@@ -1,18 +1,21 @@
 ---
 
-- hosts: vm
+- hosts: vms
   serial: 1
-  gather_facts: False
   roles:
-    - role: vm_erase
+    - role: virtu/vm/erase
+      tags: virtu/vm/erase
       delegate_to: "{{ groups['host'] | first }}"
 
-- hosts: vm
+- hosts: vms
   serial: 1
-  gather_facts: False
   tasks:
+    - name: Get network info from host
+      delegate_to: "{{ groups['host'] | first }}"
+      setup:
+        gather_subset: network
+
     - name: SSH forget old vm
-      shell: "ssh-keygen -R [{{ ansible_host }}]:{{ ansible_port }}"
+      local_action: shell ssh-keygen -R [{{ hostvars[inventory_hostname]['ansible_host']|default(ansible_default_ipv4.address) }}]:{{ ansible_port }}
       register: result
-      delegate_to: localhost
       changed_when: result.stderr.find("not found in") == -1
