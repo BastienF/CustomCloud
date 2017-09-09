@@ -6,6 +6,13 @@ host:
 
 vms:
   hosts:
+    router:
+      vm_ip: 192.168.0.5
+      mac_address: 'c2:8f:2a:51:f0:89'
+      os: ubuntu16_cloudimg
+      cores: 2
+      memory: 1024
+      system_disk_size: 30G
     bbright:
       vm_ip: 192.168.0.10
       ansible_port: 5022

@@ -1,6 +1,28 @@
 ---
 
 nat_redirect_tcp:
+### ROUTER ###
+  25:
+    vm: router
+    port: 25
+  80:
+    vm: router
+    port: 80
+  143:
+    vm: router
+    port: 143
+  443:
+    vm: router
+    port: 443
+  587:
+    vm: router
+    port: 587
+  993:
+    vm: router
+    port: 993
+  4190:
+    vm: router
+    port: 4190
 ### BBRIGHT ###
   5022:
     vm: bbright
