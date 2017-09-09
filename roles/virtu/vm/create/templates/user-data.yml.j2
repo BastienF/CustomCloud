@@ -28,4 +28,4 @@ write_files:
       ff02::3 ip6-allhosts
 
 runcmd:
-  - systemctl restart networking
+  - systemctl restart {{ 'network' if 'centos' in os else 'networking' }}
