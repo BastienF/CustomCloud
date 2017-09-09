@@ -19,3 +19,4 @@
       local_action: shell ssh-keygen -R [{{ hostvars[inventory_hostname]['ansible_host']|default(ansible_default_ipv4.address) }}]:{{ ansible_port }}
       register: result
       changed_when: result.stderr.find("not found in") == -1
+      ignore_errors: true
