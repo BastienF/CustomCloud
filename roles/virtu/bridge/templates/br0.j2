@@ -8,6 +8,9 @@ iface br0 inet static
     bridge_stp off
     bridge_fd 0
     post-up echo 1 > /proc/sys/net/ipv4/ip_forward
-    post-up iptables -t nat -A POSTROUTING -s '192.168.0.0/24' -o br0 -j MASQUERADE
-    post-up iptables -t nat -A POSTROUTING -o {{ ansible_default_ipv4.interface }} -j MASQUERADE
-    post-down iptables -t nat -D POSTROUTING -s '192.168.0.0/24' -o br0 -j MASQUERADE
+    post-up iptables -t nat -N br0_POSTROUTING
+    post-up iptables -t nat -A br0_POSTROUTING -s 192.168.0.0/24 -o {{ ansible_default_ipv4.interface }} -j MASQUERADE
+    post-up iptables -t nat -A POSTROUTING -j br0_POSTROUTING
+    post-down iptables -t nat -D POSTROUTING -j br0_POSTROUTING
+    post-down iptables -t nat -F br0_POSTROUTING
+    post-down iptables -t nat -X br0_POSTROUTING

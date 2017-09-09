@@ -13,5 +13,3 @@
       tags: basics/libvirt
     - role: virtu/bridge
       tags: virtu/bridge
-    - role: virtu/dhcp
-      tags: virtu/dhcp

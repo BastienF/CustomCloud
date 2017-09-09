@@ -2,6 +2,9 @@
 
 - hosts: vms
   roles:
+    - role: virtu/dhcp
+      tags: virtu/dhcp
+      delegate_to: "{{ groups['host'] | first }}"
     - role: virtu/nat-redirect
       tags: virtu/nat-redirect
       delegate_to: "{{ groups['host'] | first }}"
