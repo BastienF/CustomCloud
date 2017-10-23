@@ -1,0 +1,11 @@
+---
+
+docker_default_packages:
+  Ubuntu:
+    xenial:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+      package: 17.09.0~ce-0~ubuntu
+  Debian:
+    stretch:
+      repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+      package: 17.03.1~ce-0~debian-stretch

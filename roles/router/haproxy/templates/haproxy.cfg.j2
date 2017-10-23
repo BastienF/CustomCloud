@@ -1,0 +1,83 @@
+global
+
+# Default SSL material locations
+  ca-base /etc/ssl/certs
+  crt-base /etc/haproxy/certs
+
+# Default ciphers to use on SSL-enabled listening sockets.
+# For more information, see ciphers(1SSL). This list is from:
+# https://hynek.me/articles/hardening-your-web-servers-ssl-ciphers/
+  ssl-default-bind-ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS
+  ssl-default-bind-options no-sslv3
+  tune.ssl.default-dh-param 2048
+
+#########################
+#########################
+
+frontend front_http
+  mode http
+  option httplog
+  bind 0.0.0.0:80
+{% for service_key, service_value in haproxy_services|dictsort %}
+{%   if not service_value.tcp|default(false) %}
+  use_backend back_service_{{ service_key }} if { req.hdr(host) {{ service_value.public_fqdn }} }{{ ' ' + service_value.additional_acl if service_value.additional_acl is defined else '' }}
+{%   endif %}
+{% endfor %}
+
+frontend front_https_tcp
+  mode tcp
+  option tcplog
+  bind 0.0.0.0:443
+  tcp-request inspect-delay 5s
+  tcp-request content accept if { req_ssl_hello_type 1 }
+{% for service_key, service_value in haproxy_services|dictsort %}
+{%   if not service_value.tcp|default(false) %}
+  use_backend back_service_{{ service_key }}_https if { req.ssl_sni -m str {{ service_value.public_fqdn }} }{{ ' ' + service_value.additional_acl if service_value.additional_acl is defined else '' }}
+{%   endif %}
+{% endfor %}
+
+# frontend front_https
+#   mode http
+#   option httplog
+#   bind 0.0.0.0:8443 ssl crt /etc/haproxy/certs
+# {% for service_key, service_value in haproxy_services|dictsort %}
+# {%   if not service_value.tcp|default(false) %}
+#   use_backend back_service_{{ service_key }} if { ssl_fc_sni {{ service_value.public_fqdn }} }{{ ' ' + service_value.additional_acl if service_value.additional_acl is defined else '' }}
+# {%   endif %}
+# {% endfor %}
+
+{% for service_key, service_value in haproxy_services|dictsort %}
+{%   if service_value.tcp|default(false) %}
+frontend front_service_{{ service_key }}
+  mode tcp
+  option tcplog
+  bind 0.0.0.0:{{ service_value.public_port }}
+  use_backend back_service_{{ service_key }}
+{%   endif %}
+{% endfor %}
+
+{% for service_key, service_value in haproxy_services|dictsort %}
+backend back_service_{{ service_key }}
+  log global
+{%   if service_value.tcp|default(false) %}
+  mode tcp
+{%   else %}
+  mode http
+  option forwardfor
+  http-request set-header X-Forwarded-Port %[dst_port]
+  http-request add-header X-Forwarded-Proto https if { ssl_fc }
+{%   endif %}
+  server srv_{{ service_key }} {{ service_value.back_fqdn }}:{{ service_value.back_port }}
+
+{%   if not service_value.tcp|default(false) and service_value.back_ssl_port is defined %}
+backend back_service_{{ service_key }}_https
+  log global
+  mode tcp
+  server srv_{{ service_key }} {{ service_value.back_fqdn }}:{{ service_value.back_ssl_port }}
+{%   endif %}
+{% endfor %}
+
+# backend back_local_https
+#   log global
+#   mode tcp
+#   server local_https 127.0.0.1:8443

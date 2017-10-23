@@ -1,0 +1,11 @@
+---
+
+- hosts: router
+  roles:
+    - role: router/docker-engine
+      tags: router/docker-engine
+
+- hosts: router
+  roles:
+    - role: router/haproxy
+      tags: router/haproxy

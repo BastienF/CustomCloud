@@ -1,0 +1,67 @@
+---
+
+- name: Gather facts
+  setup:
+
+- name: Install required packages
+  become: true
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Enable overlay driver
+  become: true
+  modprobe:
+    name: overlay
+    state: present
+
+- name: Persist overlay driver
+  become: true
+  lineinfile:
+    line: overlay
+    dest: /etc/modules-load.d/ansible-managed.conf
+    create: true
+    state: present
+    insertafter: EOF
+
+- name: Install signing key
+  become: true
+  apt_key:
+    keyserver: hkp://ha.pool.sks-keyservers.net:80
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+
+- name: Install Docker repository
+  become: true
+  apt_repository:
+    repo: "{{ docker_repo }}"
+
+- name: Apt update
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install Docker
+  become: true
+  apt:
+    name: "docker-ce={{ docker_package }}"
+    state: present
+
+- name: Install Docker configuration
+  become: true
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  notify: restart docker
+
+- name: Install docker-py
+  become: true
+  apt:
+    name: python-docker
+    state: present
+
+- name: Start/Enable Docker engine
+  become: true
+  service:
+    name: docker
+    state: started
+    enabled: true
