@@ -1,4 +1,4 @@
 ---
 
-- include: ssh.yml
-- include: fail2ban.yml
+- import_tasks: ssh.yml
+- import_tasks: fail2ban.yml

@@ -8,8 +8,7 @@
   with_items:
     - "{{ vm_images_dir }}"
 
-- include: "{{ os }}-checksum.yml"
-  static: no
+- include_tasks: "{{ os }}-checksum.yml"
 
 - name: Download OS image
   become: true

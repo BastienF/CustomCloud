@@ -1,0 +1,27 @@
+---
+
+- name: Install Docker
+  become: yes
+  pacman:
+    name: docker
+    state: present
+
+- name: Install docker-py
+  become: true
+  pacman:
+    name: python2-docker
+    state: present
+
+- name: Start/Enable Docker engine
+  become: true
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Install Docker configuration
+  become: true
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  notify: restart docker

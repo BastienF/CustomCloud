@@ -1,0 +1,31 @@
+---
+
+- name: Install required packages
+  become: true
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Install signing key
+  become: true
+  apt_key:
+    keyserver: hkp://ha.pool.sks-keyservers.net:80
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+
+- name: Install Docker repository
+  become: true
+  apt_repository:
+    repo: "{{ docker_repo }}"
+    update_cache: true
+
+- name: Install Docker
+  become: true
+  apt:
+    name: "docker-ce={{ docker_package }}"
+    state: present
+
+- name: Install docker-py
+  become: true
+  apt:
+    name: python-docker
+    state: present
