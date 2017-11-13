@@ -1,20 +1,26 @@
 # CustomCloud
 
 ## Usage
-### Initialisation
-#### Initialisation of the playbooks
-- Setup your local SSH public key inside group_vars/all/vars
-```
-users:
-  user1:
-    ssh_key: "ssh-rsa AAAAB3NzaC1yc2EA[...]"
-  user2: ...
-```
+### Initialisation of the playbooks
 
-- Setup your custom inventory with one host named KVMHost and any number of VM
-- Setup your VM configurations based on template group_vars/all/vm100.yml
+- Setup your custom inventory (see inventories/inventory.yml.example)
 
-#### Setup of development environment
+- Setup your VM configurations in their host_vars or in broader group_vars,
+  available parameters are:
+  - `users`, a map that defines the initial users, of the form:
+    ```
+    users:
+      user1:
+        ssh_keys:
+          - "ssh-rsa AAA[...]"
+      .
+      .
+      .
+    ```
+
+- Setup ports redirection and VM storage (see group_vars/all for an example)
+
+### Setup of development environment
 The development environnement use [Vagrant](https://www.vagrantup.com/).
 
 To setup dev env :
@@ -25,36 +31,34 @@ To stop or destroy dev env :
 - Run from ./dev_env : `vagrant stop` or `vagrant destroy`
 
 ### Cloud configuration
-1. Initialisation of KVM Host (only Ubuntu server 16.04 certified)
-
+1. Initialisation of the host (only Ubuntu server 16.04 certified)  
+Make sure you access the host with a user with sudo rights
+(see `init-ansible-debian.sh` for an example setup with the ansible user)  
+Configure this user in ansible.cfg and run:
 ```
-wget https://raw.githubusercontent.com/BastienF/CustomCloud/master/init-ansible-debian.sh
-./init-ansible-debian.sh
-ansible-playbook -i inventory.dev host_post_install.yml
+ansible-playbook -i inventories/dev.yml host_install.yml
 ```
 
 2. Creation of a VM
-
 ```
-ansible-playbook -i inventory.dev vm_create.yml -l host,vm100
+ansible-playbook -i inventories/dev.yml vm_create.yml -l <your VM>
 ```
 
 3. Setup of a VM
-
 ```
-ansible-playbook -i inventory.dev vm_post_install.yml -l host,vm100
+ansible-playbook -i inventories/dev.yml vm_install.yml -l <your VM>
 ```
 
 4. Update of VM exposed ports
 ```
-ansible-playbook -i inventory.dev vm_refresh_exposed_ports.yml -l host,vm100
+ansible-playbook -i inventories/dev.yml vm_refresh_exposed_ports.yml -l <your VM>
 ```
 
 4. VM destroying
 ```
-ansible-playbook -i inventory.dev vm_erase.yml -l host,vm100
+ansible-playbook -i inventories/dev.yml vm_erase.yml -l <your VM>
 ```
-To completely erase VM and associated data use `erase_data_disk` option :
+To completely erase VM and associated data use the `vm_erase_data_disk` option :
 ```
-ansible-playbook -i inventory.dev vm_erase.yml -e erase_data_disk=true -l host,vm100
+ansible-playbook -i inventories/dev.yml vm_erase.yml -e vm_erase_data_disk=true -l <your VM>
 ```

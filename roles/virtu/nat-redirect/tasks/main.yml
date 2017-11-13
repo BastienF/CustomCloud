@@ -1,0 +1,53 @@
+---
+
+- name: Get network info from host
+  setup:
+    gather_subset: network
+
+- name: Set iptables init script location (Debian)
+  set_fact:
+    iptables_init_script: /etc/network/if-pre-up.d/load-iptables
+#   when: ansible_os_family == "Debian"
+
+# - name: Set iptables init script location (RedHat)
+#   set_fact: init_script="/sbin/ifup-local"
+#   when: ansible_os_family == "RedHat"
+
+- name: Find installed nat iptables load commands
+  run_once: true
+  find:
+    paths: /etc/iptables/
+    patterns: nat_vm-*.load
+  register: find_nat_iptables_result
+
+- name: Delete rules for VMs that are no longer there
+  become: true
+  run_once: true
+  shell: |
+    # Supprime le passage obligé par les chaines nat_vm-{{ inventory_hostname }}
+    iptables -t nat -D PREROUTING -j nat_vm-{{ item }}_PREROUTING
+    iptables -t filter -D INPUT -j nat_vm-{{ item }}_INPUT
+    iptables -t filter -D OUTPUT -j nat_vm-{{ item }}_OUTPUT
+    # Flush et supprime les chaines de traitement
+    iptables -t nat -F nat_vm-{{ item }}_PREROUTING && iptables -t nat -X nat_vm-{{ item }}_PREROUTING
+    iptables -t filter -F nat_vm-{{ item }}_INPUT && iptables -t filter -X nat_vm-{{ item }}_INPUT
+    iptables -t filter -F nat_vm-{{ item }}_OUTPUT && iptables -t filter -X nat_vm-{{ item }}_OUTPUT
+  changed_when: true
+  with_items: "{{ find_nat_iptables_result.files|map(attribute='path')|map('replace', '/etc/iptables/nat_vm-', '')|map('replace', '.load', '')|difference(groups['vms']) }}"
+
+- name: Remove scripts for VMs that are no longer there
+  become: true
+  run_once: true
+  file:
+    path: "/etc/iptables/nat_vm-{{ item }}.load"
+    state: absent
+  with_items: "{{ find_nat_iptables_result.files|map(attribute='path')|map('replace', '/etc/iptables/nat_vm-', '')|map('replace', '.load', '')|difference(groups['vms']) }}"
+
+- name: Install nat iptables load commands
+  become: true
+  template:
+    src: nat.load.j2
+    dest: "/etc/iptables/nat_vm-{{ inventory_hostname }}.load"
+    mode: '0755'
+  notify:
+    - reload iptables

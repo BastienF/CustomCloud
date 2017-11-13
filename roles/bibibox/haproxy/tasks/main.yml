@@ -1,0 +1,47 @@
+---
+
+- name: Create directories for haproxy config
+  become: true
+  file:
+    path: "/opt/docker-data/haproxy/{{ item }}"
+    state: directory
+  with_items:
+    - config
+
+- name: Log in to registry
+  become: true
+  docker_login:
+    registry: "{{ haproxy_registry }}"
+    username: "{{ haproxy_registry_user }}"
+    password: "{{ haproxy_registry_password }}"
+    reauthorize: yes
+  when: haproxy_registry_user is defined and haproxy_registry_password is defined
+
+- name: Pull haproxy image
+  become: true
+  docker_image:
+    name: "{{ haproxy_registry }}{{ haproxy_repository }}"
+    tag: "{{ haproxy_version }}"
+    state: present
+    force: true
+
+- name: Clean token
+  become: true
+  file:
+    dest: /root/.docker/config.json
+    state: absent
+
+- name: Configure haproxy
+  become: true
+  template:
+    src: haproxy.cfg.j2
+    dest: /opt/docker-data/haproxy/config/haproxy.cfg
+    mode: 0600
+  notify: restart haproxy
+
+- debug:
+    var: haproxy_published_ports
+
+- import_tasks: docker_command.yml
+  vars:
+    docker_restart: false

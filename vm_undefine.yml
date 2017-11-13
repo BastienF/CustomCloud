@@ -1,0 +1,8 @@
+---
+
+- hosts: vms
+  serial: 1
+  roles:
+    - role: virtu/vm/undefine
+      tags: virtu/vm/undefine
+      delegate_to: "{{ groups['host'] | first }}"

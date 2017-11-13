@@ -1,0 +1,9 @@
+---
+
+firewall_exposed_ports:
+  22:
+    proto: tcp
+# firewall_exposed_ports:
+#   <portnum>:
+#     proto: <tcp|udp>
+# #     prefix: true (?)

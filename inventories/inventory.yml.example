@@ -1,0 +1,23 @@
+---
+
+host:
+  hosts:
+    <virt host>:
+      ansible_host: ... (nothing mandatory)
+      .
+      .
+      .
+
+vms:
+  hosts:
+    <virt guest>:
+      vm_ip: <ip on the internal bridge (192.168.0.0/24)> (mandatory)
+      mac_address: <unique mac address> (mandatory)
+      os: <an entry from os_images, see roles/virtu/vm/download-os/defaults/main.yml> (mandatory)
+      cores: <number of cores> (mandatory)
+      memory: <memory> (mandatory)
+      system_disk_size: <size of the system disk, example: 30G> (mandatory)
+      data_disk_size: <size of the data disk> (optional)
+    .
+    .
+    .

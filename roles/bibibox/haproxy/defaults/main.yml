@@ -1,0 +1,26 @@
+---
+
+haproxy_version: 1.7.9
+
+haproxy_registry: ''
+# haproxy_registry_user: undefined by default
+# haproxy_registry_password: undefined by default
+
+haproxy_repository: haproxy
+
+haproxy_services: {}
+# haproxy_services:
+#   <http/https service>:
+#     public_fqdn: <external fqdn>
+#     back_fqdn: <backend fqdn>
+#     back_port: <backend port>
+#   <http/https service SSL pass-through>:
+#     public_fqdn: <external fqdn>
+#     back_fqdn: <backend fqdn>
+#     back_port: <backend port>
+#     back_ssl_port: <backend SSL port>
+#   <tcp service>:
+#     tcp: true
+#     public_port: <external port>
+#     back_fqdn: <backend fqdn>
+#     back_port: <backend port>

@@ -1,0 +1,34 @@
+---
+
+- name: Set iptables init script location (Debian)
+  set_fact:
+    iptables_init_script: /etc/network/if-pre-up.d/load-iptables
+#   when: ansible_os_family == "Debian"
+
+# - name: Set iptables init script location (RedHat)
+#   set_fact: init_script="/sbin/ifup-local"
+#   when: ansible_os_family == "RedHat"
+
+- name: Create iptables commands directory
+  become: true
+  file:
+    path: /etc/iptables
+    state: directory
+
+- name: Install iptables auto-load script
+  become: true
+  template:
+    src: load-iptables.j2
+    dest: "{{ iptables_init_script }}"
+    mode: '0755'
+  notify:
+    - reload iptables
+
+- name: Install firewall iptables load commands
+  become: true
+  template:
+    src: firewall.load.j2
+    dest: /etc/iptables/firewall.load
+    mode: '0755'
+  notify:
+    - reload iptables

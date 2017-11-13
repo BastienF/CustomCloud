@@ -1,0 +1,3 @@
+---
+
+haproxy_published_ports: "{{ haproxy_services | dictsort | map('last') | selectattr('public_port', 'defined') | map(attribute='public_port') | list | union([80, 443]) | unique | list }}"

@@ -1,0 +1,31 @@
+#cloud-config
+
+{% if users %}
+users:
+{%   for user, config in users|dictsort %}
+  - name: {{ user }}
+    gecos: {{ user }}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: true
+    ssh-authorized-keys:
+{%     for ssh_key in config.ssh_keys %}
+      - {{ ssh_key }}
+{%     endfor %}
+{%   endfor %}
+{% endif %}
+
+write_files:
+  - path: /etc/hosts
+    content: |
+      127.0.0.1 localhost {{ inventory_hostname }}
+      # The following lines are desirable for IPv6 capable hosts
+      ::1 ip6-localhost ip6-loopback {{ inventory_hostname }}
+      fe00::0 ip6-localnet
+      ff00::0 ip6-mcastprefix
+      ff02::1 ip6-allnodes
+      ff02::2 ip6-allrouters
+      ff02::3 ip6-allhosts
+
+runcmd:
+  - systemctl restart {{ 'network' if 'centos' in os else 'networking' }}

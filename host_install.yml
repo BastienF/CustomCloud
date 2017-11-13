@@ -1,0 +1,15 @@
+---
+
+- hosts: host
+  gather_facts: true
+  roles:
+    - role: basics/essential-packages
+      tags: basics/essential-packages
+    - role: basics/firewall
+      tags: basics/firewall
+    - role: basics/security
+      tags: basics/security
+    - role: virtu/libvirt
+      tags: basics/libvirt
+    - role: virtu/bridge
+      tags: virtu/bridge

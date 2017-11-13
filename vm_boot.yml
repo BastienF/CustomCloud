@@ -1,7 +1,0 @@
----
-# Setup Proxmox
-- hosts: vm
-  gather_facts: False
-  roles:
-    - role: vm_startup
-      delegate_to: "{{ groups['host'] | first }}"

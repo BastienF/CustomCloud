@@ -1,24 +1,26 @@
 ---
 
-- hosts: host
+- hosts: vms
   roles:
-    - role: host_conf_virt_network
-    - role: dhcp
+    - role: virtu/dhcp
+      tags: virtu/dhcp
+      delegate_to: "{{ groups['host'] | first }}"
+    - role: virtu/nat-redirect
+      tags: virtu/nat-redirect
+      delegate_to: "{{ groups['host'] | first }}"
 
-- hosts: vm
+- hosts: vms
   serial: 1
-  gather_facts: False
   pre_tasks:
       - name: check if VM exists
-        become: yes
+        become: true
         delegate_to: "{{ groups['host'] | first }}"
         shell: virsh list --name --all | grep '^{{ inventory_hostname }}$'
         register: vm_check_result
         changed_when: false
         failed_when: false
   roles:
-    - role: vm_routing_nat
-      delegate_to: "{{ groups['host'] | first }}"
-    - role: vm_create_kvm
+    - role: virtu/vm/create
+      tags: virtu/vm/create
       when: vm_check_result.rc == 1
       delegate_to: "{{ groups['host'] | first }}"

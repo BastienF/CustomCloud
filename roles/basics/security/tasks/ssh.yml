@@ -1,0 +1,19 @@
+---
+
+- name: Disable ssh password authentication
+  become: true
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    line: "PasswordAuthentication no"
+    regexp: "^PasswordAuthentication"
+    state: present
+  notify: reload openssh
+
+- name: Disable ssh root login
+  become: true
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    line: "PermitRootLogin no"
+    regexp: "^PermitRootLogin.*"
+    state: present
+  notify: reload openssh

@@ -1,0 +1,11 @@
+---
+
+- hosts: bibibox
+  roles:
+    - role: bibibox/docker-engine
+      tags: bibibox/docker-engine
+
+- hosts: bibibox
+  roles:
+    - role: bibibox/haproxy
+      tags: bibibox/haproxy

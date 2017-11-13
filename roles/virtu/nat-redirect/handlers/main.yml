@@ -1,0 +1,6 @@
+---
+
+- name: reload iptables
+  become: true
+  command: bash "{{ iptables_init_script }}"
+  changed_when: true

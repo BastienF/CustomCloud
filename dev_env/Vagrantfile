@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.memory = 2048
     end
   end
-  config.vm.provision "shell", :privileged => true, inline: "apt-get install -y python"
+  config.vm.provision "shell", :privileged => true, inline: "apt-get update && apt-get install -y python"
   config.vm.provision "file", source: "../#{init_script}", destination: "#{init_script_dest}"
   config.vm.provision "shell", :privileged => true, inline: "chmod +x #{init_script_dest} && #{init_script_dest}"
 end

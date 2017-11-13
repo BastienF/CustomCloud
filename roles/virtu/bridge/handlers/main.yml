@@ -1,0 +1,13 @@
+---
+
+- name: restart br0
+  become: true
+  shell: ifdown br0 && ifup br0
+  notify: restart isc-dhcp-server
+
+- name: restart isc-dhcp-server
+  become: true
+  service:
+    name: isc-dhcp-server
+    state: restarted
+  ignore_errors: true

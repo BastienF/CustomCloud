@@ -1,0 +1,20 @@
+---
+
+- hosts: vms
+  tasks:
+    - name: Ensure python 2 is installed
+      become: true
+      raw: bash -c 'apt-get install -y python'
+      register: result
+      changed_when: "'python is already the newest version' not in result.stdout"
+      when: os == "ubuntu16_cloudimg"
+
+- hosts: vms
+  gather_facts: true
+  roles:
+    - role: basics/essential-packages
+      tags: basics/essential-packages
+    - role: basics/firewall
+      tags: basics/firewall
+    - role: basics/security
+      tags: basics/security

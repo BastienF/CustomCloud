@@ -1,0 +1,4 @@
+---
+
+dependencies:
+  - { role: virtu/vm/download-os }

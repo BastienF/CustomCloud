@@ -1,12 +1,13 @@
 ---
-- hosts: vm
-  serial: 1
-  gather_facts: False
+
+- hosts: vms
   roles:
-    - role: vm_routing_nat
+    - role: virtu/nat-redirect
+      tags: virtu/nat-redirect
       delegate_to: "{{ groups['host'] | first }}"
 
-- hosts: vm
-  serial: 1
+- hosts: vms
+  gather_facts: true
   roles:
-    - role: firewall
+    - role: basics/firewall
+      tags: basics/firewall

@@ -1,0 +1,6 @@
+---
+
+vm_images_dir: "{{ vm_storage_base_dir }}/images"
+os_file: "{{ vm_images_dir }}/{{ os }}.img"
+
+os_image: "{{ os_images[os] }}"

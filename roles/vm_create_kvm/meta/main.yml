@@ -1,4 +1,0 @@
----
-
-dependencies:
-  - { role: vm_download_os }
