@@ -1,5 +1,0 @@
----
-
-- name: reboot
-  static: no
-  include: ../handlers/reboot.yml

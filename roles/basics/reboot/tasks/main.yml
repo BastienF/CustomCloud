@@ -4,7 +4,7 @@
 
 - name: Fire and forget a reboot action
   become: true
-  shell: sleep 5; reboot
+  shell: sleep 5; shutdown -r now "Ansible triggered a reboot"
   async: 1
   poll: 0
   changed_when: true

@@ -2,8 +2,8 @@
 
 - hosts: bibibox
   roles:
-    - role: bibibox/docker-engine
-      tags: bibibox/docker-engine
+    - role: basics/docker-engine
+      tags: basics/docker-engine
 
 - hosts: bibibox
   roles:
