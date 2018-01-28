@@ -9,5 +9,5 @@
 - hosts: vms
   gather_facts: true
   roles:
-    - role: basics/firewall
-      tags: basics/firewall
+    - role: virtu/vm/firewall
+      tags: virtu/vm/firewall

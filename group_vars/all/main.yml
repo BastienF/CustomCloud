@@ -1,6 +1,10 @@
 ---
 
 nat_redirect_tcp:
+#  448:            #Exposed port
+#    vm: hostname  #Concerned vm
+#    port: 1448    #VM redirected port
+#    [proto: tcp]  #Protocol (default: tcp)
 ### ROUTER ###
   25:
     vm: router
@@ -37,6 +41,9 @@ nat_redirect_tcp:
   10022:
     vm: bfiven
     port: 22
+  10122:
+    vm: bfiven
+    port: 10122
   10080:
     vm: bfiven
     port: 80

@@ -1,0 +1,21 @@
+---
+
+- name: List exposed ports
+  set_fact:
+    exposed_port: '{ "vm":"{{ item.value.vm }}", "port":"{{ item.value.port }}", "proto":"{{ item.value.proto|default("tcp") }}" }'
+  with_dict: "{{ nat_redirect_tcp }}"
+  register: all_exposed_ports
+
+- name: Filter exposed ports
+  set_fact: exposed_ports="{{ all_exposed_ports.results | map(attribute='ansible_facts.exposed_port')  | selectattr("vm", "equalto", inventory_hostname) | list }}"
+
+- name: Format exposed ports
+  set_fact:
+    vm_firewall_exposed_ports: '{{ vm_firewall_exposed_ports|default({}) | combine({item.port: {"proto": item.proto} }) }}'
+  with_items: "{{ exposed_ports }}"
+
+- name: Execute firewall role
+  include_role:
+    name: basics/firewall
+  vars:
+    firewall_exposed_ports: "{{ vm_firewall_exposed_ports }}"
