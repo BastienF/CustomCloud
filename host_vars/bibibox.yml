@@ -5,4 +5,9 @@ users:
       - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSvqq0RlfV5gkuhgTlZEe5zP9f8ctqTRvo245tfjEEEXuLrCqP/JKcMU514EAvaj6ZkFYo/6m9B++oxQxbY14Vff8sbWe6obL0OdFpMufZk3ks6JO/B4DNQPhKPQy8RykwZsP+5kW3JhgNVtTpvdtfCsIrJ5+aFK5G2JCeiO7M3xZxaCbufqmQdO7qNjOezQ7We/A+tCLOLkxAp+no/HshGVcJ37rv+7H1PIN/n/8GbG3UjyAr09DIwFe2svpMQ8Lhv1sdioDygGD6QAEILa8bwyFjkUCavzgybivgdjOqaSJZ6aWUi/xcfaAIBKvXcF7TnQa9eDWJ2XnoPms+bPbIs54ru8x10qiqwz4W2DFnfWq0UdN+/vlgA7lGJO4ng4xyQfKGF+Std17KVUwoZbN0oguG05lNi2+jByIOuUpqerHYyl2H8zyICy/XP/0ypR3MAjWC56/XHv1QspKKf955EA7FjYfT7IyeUdXkqE0VkhcKTImnxYQjc7k9cksi/oUBwC4vLDNUFM9D/BFcR+DvCrm7JTSqHiQJatLIkPUZJTtJ65wImgEuDu9aC9GJg9Isr23MDg/FFgq7B2NTeo2S2aOO4vAH8R3FG7IOBdizpYNdNIpUB+PDhbiFLxbLClhNxKFzZRYoVTEX7UZoGqpa1bZEPTiTTAatXHMRUWY4lQ== Maastiff@OCTO-BBR'
       - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGhwcxYfExc7o/C7qZCsRGO+XLLvtXrgwBScyW8kyXaS udyrfrykte'
 
-haproxy_services: {}
+haproxy_services:
+  db.aura.moi.ovh:
+    public_fqdn: db.aura.moi.ovh
+    back_fqdn: "{{ hostvars['bfiven']['vm_ip'] }}"
+    back_port: 80
+    back_ssl_port: 443
