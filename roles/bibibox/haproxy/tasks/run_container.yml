@@ -1,5 +1,7 @@
 ---
 
+- meta: flush_handlers
+
 - name: Prepare exposed ports variable
   set_fact:
     haproxy_published_ports_formatted: |
@@ -14,10 +16,11 @@
   docker_container:
     name: haproxy
     image: "{{ haproxy_registry }}{{ haproxy_repository }}:{{ haproxy_version }}"
+    pull: false
     volumes:
       - /opt/docker-data/haproxy/config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
       - /opt/docker-data/haproxy/config/certs:/etc/haproxy/certs
     published_ports: "{{ haproxy_published_ports_formatted }}"
     state: started
-    recreate: "{{ docker_restart | default(false) | bool }}"
+    recreate: "{{ haproxy_docker_recreate | default(false) | bool }}"
     restart_policy: unless-stopped

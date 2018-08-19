@@ -1,6 +1,6 @@
 ---
 
-haproxy_version: 1.7.9
+haproxy_version: 1.8.13
 
 haproxy_registry: ''
 # haproxy_registry_user: undefined by default
@@ -9,18 +9,17 @@ haproxy_registry: ''
 haproxy_repository: haproxy
 
 haproxy_services: {}
-# haproxy_services:
-#   <http/https service>:
-#     public_fqdn: <external fqdn>
-#     back_fqdn: <backend fqdn>
-#     back_port: <backend port>
-#   <http/https service SSL pass-through>:
-#     public_fqdn: <external fqdn>
-#     back_fqdn: <backend fqdn>
-#     back_port: <backend port>
-#     back_ssl_port: <backend SSL port>
-#   <tcp service>:
-#     tcp: true
-#     public_port: <external port>
-#     back_fqdn: <backend fqdn>
-#     back_port: <backend port>
+#haproxy_services:
+#  https_endpoint:
+#    tcp: false (default value)
+#    decipher: true (default value) to handle TLS and transmit clear HTTP requests, false to simply pass on the TLS stream
+#    public_fqdn: <exposed Host/SNI> (mandatory; if TLS is handled, will expect an exact match else the end of the requested domain must match)
+#    wildcard: false (default value) if false expect an exact match, if true only the end of the requested domain must match
+#    back_host: <backend adress> (mandatory)
+#    back_port: 80 (default value) (when TLS is not handled, only clear HTTP is sent there)
+#    back_port_tls: 443 (default value) (when TLS is not handled, encrypted HTTPS is sent there)
+#  tcp_endpoint:
+#    tcp: true
+#    public_port: <exposed port> (mandatory)
+#    back_host: <backend adress> (mandatory)
+#    back_port: 80 (default value)

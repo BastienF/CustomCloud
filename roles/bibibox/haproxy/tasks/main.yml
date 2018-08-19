@@ -31,6 +31,25 @@
     dest: /root/.docker/config.json
     state: absent
 
+- name: Get list of public FQDNs
+  set_fact:
+    haproxy_public_fqdn_list: |
+      [
+      {% for name, service in haproxy_services | dictsort %}
+      {%   if service.public_fqdn is defined and service.decipher|default(true) %}
+          "{{ service.public_fqdn }}",
+      {%   endif %}
+      {% endfor %}
+          ""
+      ]
+
+- name: Refine list of public FQDNs (remove the empty string)
+  set_fact:
+    haproxy_public_fqdn_list: "{{ haproxy_public_fqdn_list | select | list }}"
+
+- debug:
+    var: haproxy_public_fqdn_list
+
 - name: Configure haproxy
   become: true
   template:
@@ -42,6 +61,4 @@
 - debug:
     var: haproxy_published_ports
 
-- import_tasks: docker_command.yml
-  vars:
-    docker_restart: false
+- import_tasks: run_container.yml
