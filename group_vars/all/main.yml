@@ -7,25 +7,25 @@ nat_redirect_tcp:
 #    [proto: tcp]  #Protocol (default: tcp)
 ### ROUTER ###
   25:
-    vm: router
+    vm: bibibox
     port: 25
   80:
-    vm: router
+    vm: bibibox
     port: 80
   143:
-    vm: router
+    vm: bibibox
     port: 143
   443:
-    vm: router
+    vm: bibibox
     port: 443
   587:
-    vm: router
+    vm: bibibox
     port: 587
   993:
-    vm: router
+    vm: bibibox
     port: 993
   4190:
-    vm: router
+    vm: bibibox
     port: 4190
 ### BBRIGHT ###
   5022:
