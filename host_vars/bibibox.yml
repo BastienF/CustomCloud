@@ -6,8 +6,8 @@ users:
       - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGhwcxYfExc7o/C7qZCsRGO+XLLvtXrgwBScyW8kyXaS udyrfrykte'
 
 haproxy_services:
-  db.aura.moi.ovh:
-    public_fqdn: db.aura.moi.ovh
-    back_fqdn: "{{ hostvars['bfiven']['vm_ip'] }}"
-    back_port: 80
-    back_ssl_port: 443
+  moi.ovh:
+    decipher: false
+    public_fqdn: moi.ovh
+    wildcard: true
+    back_host: "{{ hostvars['bfiven']['vm_ip'] }}"
