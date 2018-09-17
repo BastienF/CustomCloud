@@ -1,0 +1,13 @@
+---
+
+- name: Find current checksum
+  shell: >
+    curl "{{ os_image.checksum.url }}" |
+    grep "{{ os_image.url | basename }}$" |
+    cut -d ' ' -f1
+  register: curled_checksum
+  changed_when: false
+
+- name: Set current_checksum var
+  set_fact:
+    current_checksum: "{{ curled_checksum.stdout }}"

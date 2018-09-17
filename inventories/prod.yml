@@ -27,7 +27,7 @@ vms:
       vm_ip: 192.168.0.11
       ansible_port: 10022
       mac_address: 'c2:8f:2a:51:f0:8b'
-      os: ubuntu16_cloudimg
+      os: ubuntu18_cloudimg
       cores: 3
       memory: 4096
       system_disk_size: 30G
