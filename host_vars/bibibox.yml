@@ -11,3 +11,8 @@ haproxy_services:
     public_fqdn: moi.ovh
     wildcard: true
     back_host: "{{ hostvars['bfiven']['vm_ip'] }}"
+  bgstn_fr:
+    decipher: false
+    public_fqdn: bgstn.fr
+    wildcard: true
+    back_host: "{{ hostvars['bfiven']['vm_ip'] }}"
