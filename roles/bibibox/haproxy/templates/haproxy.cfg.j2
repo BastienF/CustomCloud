@@ -37,7 +37,7 @@ frontend front_http
 
 {% for service_key, service_value in haproxy_services|dictsort %}
 {%   if not service_value.tcp|default(false) %}
-  use_backend back_{{ service_key }} if { req.hdr(host) -m {{ 'end' if service_value.wildcard|default(false)|bool else 'str' }} {{ service_value.public_fqdn }} }{{ ' ' + service_value.additional_acl if service_value.additional_acl is defined else '' }}
+  use_backend back_{{ service_key }} if { req.hdr(host),field(1,:) -m {{ 'end' if service_value.wildcard|default(false)|bool else 'str' }} {{ service_value.public_fqdn }} }{{ ' ' + service_value.additional_acl if service_value.additional_acl is defined else '' }}
 {%   endif %}
 {% endfor %}
 
