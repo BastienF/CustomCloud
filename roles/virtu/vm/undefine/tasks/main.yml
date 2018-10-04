@@ -1,5 +1,13 @@
 ---
 
+- name: Intention Check
+  pause:
+    prompt: >-
+      You are about to undefine the VM called "{{ inventory_hostname }}".
+      To confirm this action, please type the VM's name and press enter
+  register: result
+  failed_when: result.user_input != inventory_hostname
+
 - name: Destroy VM
   become: true
   command: virsh destroy "{{ inventory_hostname }}"

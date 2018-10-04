@@ -1,5 +1,13 @@
 ---
 
+- name: Intention Check
+  pause:
+    prompt: >-
+      YOU ARE ABOUT TO DELETE {{ '_ALL_' if vm_erase_data_disk|bool else 'SYSTEM' }} DATA FOR THE VM CALLED "{{ inventory_hostname }}".
+      To confirm this action, please type the VM's name and press enter
+  register: result
+  failed_when: result.user_input != inventory_hostname
+
 - name: Erase all VM seeds and disks except data
   become: true
   file:
