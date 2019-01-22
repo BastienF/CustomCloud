@@ -15,4 +15,24 @@ haproxy_services:
     decipher: false
     public_fqdn: bgstn.fr
     wildcard: true
-    back_host: "{{ hostvars['bfiven']['vm_ip'] }}"
+    back_host: "{{ hostvars['bgarbage']['vm_ip'] }}"
+  smtp:
+    tcp: true
+    public_port: 25
+    back_host: "{{ hostvars['bgarbage']['vm_ip'] }}"
+  smtp_sub:
+    tcp: true
+    public_port: 587
+    back_host: "{{ hostvars['bgarbage']['vm_ip'] }}"
+  imap:
+    tcp: true
+    public_port: 143
+    back_host: "{{ hostvars['bgarbage']['vm_ip'] }}"
+  imaps:
+    tcp: true
+    public_port: 993
+    back_host: "{{ hostvars['bgarbage']['vm_ip'] }}"
+  sieve:
+    tcp: true
+    public_port: 4190
+    back_host: "{{ hostvars['bgarbage']['vm_ip'] }}"
