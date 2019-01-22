@@ -94,7 +94,7 @@ backend back_{{ service_key }}
   http-request set-header X-Forwarded-Port %[dst_port]
   http-request add-header X-Forwarded-Proto https if { ssl_fc }
 {%   endif %}
-  server srv_{{ service_key }} {{ service_value.back_host }}:{{ service_value.back_port|default(80) }} check resolvers docker init-addr last,libc,none
+  server srv_{{ service_key }} {{ service_value.back_host }}:{{ service_value.back_port|default(service_value.public_port) if service_value.tcp|default(false) else service_value.back_port|default(80) }} check resolvers docker init-addr last,libc,none
 {%   if not service_value.tcp|default(false) and not service_value.decipher|default(true) %}
 
 backend back_{{ service_key }}_ssl

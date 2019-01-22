@@ -10,7 +10,7 @@ haproxy_repository: haproxy
 
 haproxy_services: {}
 #haproxy_services:
-#  https_endpoint:
+#  <https_endpoint>:
 #    tcp: false (default value)
 #    decipher: true (default value) to handle TLS and transmit clear HTTP requests, false to simply pass on the TLS stream
 #    public_fqdn: <exposed Host/SNI> (mandatory; if TLS is handled, will expect an exact match else the end of the requested domain must match)
@@ -18,8 +18,8 @@ haproxy_services: {}
 #    back_host: <backend adress> (mandatory)
 #    back_port: 80 (default value) (when TLS is not handled, only clear HTTP is sent there)
 #    back_port_tls: 443 (default value) (when TLS is not handled, encrypted HTTPS is sent there)
-#  tcp_endpoint:
+#  <tcp_endpoint>:
 #    tcp: true
 #    public_port: <exposed port> (mandatory)
 #    back_host: <backend adress> (mandatory)
-#    back_port: 80 (default value)
+#    back_port: <backend port> (optional, default value : same as public_port)
