@@ -1,9 +1,9 @@
 #!/bin/bash
 
-OIFS=$IFS
+old_IFS=$IFS
 IFS=$'\n'
 load_scripts=($(find /etc/iptables/ -name '*.load'))
-IFS=$OIFS
+IFS=$old_IFS
 
 for load_script in "${load_scripts[@]}"; do
   source "$load_script"

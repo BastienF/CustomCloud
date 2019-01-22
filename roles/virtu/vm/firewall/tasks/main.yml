@@ -19,3 +19,4 @@
     name: basics/firewall
   vars:
     firewall_exposed_ports: "{{ vm_firewall_exposed_ports }}"
+    firewall_ruleset_name: "natted_ports"

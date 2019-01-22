@@ -28,7 +28,7 @@
   become: true
   template:
     src: firewall.load.j2
-    dest: /etc/iptables/firewall.load
+    dest: "/etc/iptables/firewall{{ '_' + firewall_ruleset_name if firewall_ruleset_name is defined else '' }}.load"
     mode: '0755'
   notify:
     - reload iptables
