@@ -44,6 +44,10 @@ nat_redirect_tcp:
   10122:
     vm: bfiven
     port: 10122
+  ## Jellyfin
+  8920:
+    vm: bfiven
+    port: 443
   10080:
     vm: bfiven
     port: 80
@@ -59,6 +63,23 @@ nat_redirect_tcp:
     port: 80
   15443:
     vm: bgarbage
+    port: 443
+  ### BFIVEN_PP ###
+  20022:
+    vm: bfivenpp
+    port: 22
+  #Jellyfin
+  8921:
+    vm: bfivenpp
+    port: 443
+  20122:
+    vm: bfivenpp
+    port: 10122
+  20080:
+    vm: bfivenpp
+    port: 80
+  20443:
+    vm: bfivenpp
     port: 443
 
 vm_storage_base_dir: /data/virtu

@@ -54,7 +54,7 @@ ansible-playbook -i inventories/dev.yml vm_install.yml -l <your VM>
 ansible-playbook -i inventories/dev.yml vm_refresh_exposed_ports.yml -l <your VM>
 ```
 
-4. VM destroying
+5. VM destroying
 ```
 ansible-playbook -i inventories/dev.yml vm_erase.yml -l <your VM>
 ```

@@ -6,7 +6,12 @@ users:
       - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGhwcxYfExc7o/C7qZCsRGO+XLLvtXrgwBScyW8kyXaS udyrfrykte'
 
 haproxy_services:
-  moi.ovh:
+  01_preprod.moi.ovh:
+    decipher: false
+    public_fqdn: preprod.moi.ovh
+    wildcard: true
+    back_host: "{{ hostvars['bfivenpp']['vm_ip'] }}"
+  02_moi.ovh:
     decipher: false
     public_fqdn: moi.ovh
     wildcard: true
