@@ -48,6 +48,14 @@ nat_redirect_tcp:
   8920:
     vm: bfiven
     port: 443
+  #Transmission
+  51413:
+    vm: bfiven
+    port: 51413
+  11414:
+    vm: bfiven
+    port: 21414
+    proto: udp
   10080:
     vm: bfiven
     port: 80
@@ -72,6 +80,14 @@ nat_redirect_tcp:
   8921:
     vm: bfivenpp
     port: 443
+  #Transmission
+  21413:
+    vm: bfivenpp
+    port: 21413
+  21414:
+    vm: bfivenpp
+    port: 21414
+    proto: udp
   20122:
     vm: bfivenpp
     port: 10122
