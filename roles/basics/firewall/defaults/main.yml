@@ -5,7 +5,7 @@ firewall_exposed_ports:
     proto: tcp
 # firewall_exposed_ports:
 #   <portnum>:
-#     proto: <tcp|udp>
+#     protos: [tcp,udp]
 # #     prefix: true (?)
 
 # firewall_ruleset_name: <undefined by default>

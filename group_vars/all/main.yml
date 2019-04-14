@@ -4,7 +4,7 @@ nat_redirect_tcp:
 #  448:            #Exposed port
 #    vm: hostname  #Concerned vm
 #    port: 1448    #VM redirected port
-#    [proto: tcp]  #Protocol (default: tcp)
+#    [protos: [tcp, udp]]  #Protocol (default: [tcp])
 ### ROUTER ###
   25:
     vm: bibibox
@@ -52,10 +52,7 @@ nat_redirect_tcp:
   51413:
     vm: bfiven
     port: 51413
-  11414:
-    vm: bfiven
-    port: 21414
-    proto: udp
+    protos: [udp, tcp]
   10080:
     vm: bfiven
     port: 80
@@ -84,10 +81,7 @@ nat_redirect_tcp:
   21413:
     vm: bfivenpp
     port: 21413
-  21414:
-    vm: bfivenpp
-    port: 21414
-    proto: udp
+    protos: [udp, tcp]
   20122:
     vm: bfivenpp
     port: 10122
