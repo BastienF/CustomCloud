@@ -41,6 +41,11 @@ nat_redirect_tcp:
   10022:
     vm: bfiven
     port: 22
+  # VPN
+  11194:
+    vm: bfiven
+    port: 11194
+    protos: [udp]
   10122:
     vm: bfiven
     port: 10122
@@ -70,9 +75,20 @@ nat_redirect_tcp:
     vm: bgarbage
     port: 443
   ### BFIVEN_PP ###
+#  20777:
+#    vm: bfivenpp
+#    port: 20777
+#  20778:
+#    vm: bfivenpp
+#    port: 20778
   20022:
     vm: bfivenpp
     port: 22
+  #VPN
+  21194:
+    vm: bfivenpp
+    port: 21194
+    protos: [udp]
   #Jellyfin
   8921:
     vm: bfivenpp
