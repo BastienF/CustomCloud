@@ -1,7 +1,7 @@
 ---
 
 - name: Install Docker
-  become: yes
+  become: true
   pacman:
     name: docker
     state: present
@@ -9,7 +9,7 @@
 - name: Install docker-py
   become: true
   pacman:
-    name: python2-docker
+    name: python-docker
     state: present
 
 - name: Start/Enable Docker engine

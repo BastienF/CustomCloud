@@ -15,17 +15,18 @@
 - name: Install Docker repository
   become: true
   apt_repository:
-    repo: "{{ docker_repo }}"
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
     update_cache: true
 
 - name: Install Docker
   become: true
   apt:
-    name: "docker-ce={{ docker_package }}"
+    name:
+      - "docker-ce=5:{{ docker_version }}~3-0~{{ ansible_distribution|lower }}-{{ ansible_distribution_release }}"
     state: present
 
 - name: Install docker-py
   become: true
   apt:
-    name: python-docker
+    name: python3-docker
     state: present

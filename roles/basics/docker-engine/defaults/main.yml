@@ -1,4 +1,3 @@
 ---
 
-docker_repo: "{{ docker_default_packages[ansible_distribution][ansible_distribution_release]['repo'] }}"
-docker_package: "{{ docker_default_packages[ansible_distribution][ansible_distribution_release]['package'] }}"
+docker_version: '19.03.13'
