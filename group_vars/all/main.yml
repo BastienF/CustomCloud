@@ -7,7 +7,7 @@ nat_redirect_tcp:
 #    [protos: [tcp, udp]]  #Protocol (default: [tcp])
 ### ROUTER ###
   25:
-    vm: bibibox
+    vm: bgarbage
     port: 25
   80:
     vm: bibibox
@@ -74,7 +74,16 @@ nat_redirect_tcp:
   15443:
     vm: bgarbage
     port: 443
-  ### BFIVEN_PP ###
+  # VPN
+  500:
+    vm: bgarbage
+    port: 500
+    protos: [udp]
+  4500:
+    vm: bgarbage
+    port: 4500
+    protos: [udp]
+### BFIVEN_PP ###
 #  20777:
 #    vm: bfivenpp
 #    port: 20777
@@ -107,5 +116,9 @@ nat_redirect_tcp:
   20443:
     vm: bfivenpp
     port: 443
+### TEST ###
+  40022:
+    vm: test
+    port: 22
 
 vm_storage_base_dir: /data/virtu

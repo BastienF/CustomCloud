@@ -8,7 +8,7 @@
   with_items:
     - "{{ vm_images_dir }}"
 
-- include_tasks: "{{ os }}-checksum.yml"
+- include_tasks: "{{ os_image.checksum.parser }}-checksum.yml"
 
 - name: Download OS image
   become: true

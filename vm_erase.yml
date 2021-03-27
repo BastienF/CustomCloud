@@ -16,14 +16,16 @@
         gather_subset: network
 
     - name: SSH forget old vm (standard port)
-      local_action: shell ssh-keygen -R {{ hostvars[inventory_hostname]['ansible_host']|default(inventory_hostname) }}
+      delegate_to: localhost
+      command: ssh-keygen -R {{ hostvars[inventory_hostname]['ansible_host']|default(inventory_hostname) }}
       register: result
       changed_when: result.stderr.find("not found in") == -1
       ignore_errors: true
       when: ansible_port is not defined
 
     - name: SSH forget old vm (non standard port)
-      local_action: shell ssh-keygen -R [{{ hostvars[inventory_hostname]['ansible_host']|default(inventory_hostname) }}]:{{ ansible_port }}
+      delegate_to: localhost
+      command: ssh-keygen -R [{{ hostvars[inventory_hostname]['ansible_host']|default(inventory_hostname) }}]:{{ ansible_port }}
       register: result
       changed_when: result.stderr.find("not found in") == -1
       ignore_errors: true

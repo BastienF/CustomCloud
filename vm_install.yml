@@ -1,13 +1,13 @@
 ---
 
-- hosts: vms
-  tasks:
-    - name: Ensure python 2 is installed
-      become: true
-      raw: bash -c 'apt-get update && apt-get install -y python'
-      register: result
-      changed_when: "'python is already the newest version' not in result.stdout"
-      when: os == "ubuntu16_cloudimg" or os == "ubuntu18_cloudimg"
+# - hosts: vms
+#   tasks:
+#     - name: Ensure python 2 is installed
+#       become: true
+#       raw: bash -c 'apt-get update && apt-get install -y python'
+#       register: result
+#       changed_when: "'python is already the newest version' not in result.stdout"
+#       when: os == "ubuntu16_cloudimg" or os == "ubuntu18_cloudimg"
 
 - hosts: vms
   gather_facts: true

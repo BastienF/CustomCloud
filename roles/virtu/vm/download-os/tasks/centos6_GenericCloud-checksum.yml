@@ -3,7 +3,10 @@
 - name: Find current checksum
   shell: >
     curl "{{ os_image.checksum.url }}" |
-    grep "{{ os_image.url | basename }}$" |
+    grep "CentOS-6-x86_64-GenericCloud-.....qcow2$" |
+    tr -s ' ' |
+    sort -r -t' ' -k2 |
+    head -n 1 |
     cut -d ' ' -f1
   register: curled_checksum
   changed_when: false

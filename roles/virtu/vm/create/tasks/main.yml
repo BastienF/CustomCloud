@@ -48,7 +48,7 @@
   command: genisoimage -output "{{ vm_disks_dir }}/cidata.iso" -volid cidata -joliet -rock .
   args:
     chdir: "{{ vm_seeds_dir }}"
-    creates: "{{ seeds_templating|changed|ternary(omit, vm_disks_dir + '/cidata.iso') }}"
+    creates: "{{ (seeds_templating is changed) | ternary(omit, vm_disks_dir + '/cidata.iso') }}"
 
 - name: Create / Start VM
   become: true
