@@ -1,5 +1,12 @@
 ---
 
+- name: apt-get update
+  become: true
+  apt:
+    update_cache: true
+  changed_when: false
+  when: ansible_os_family == "Debian"
+
 - name: Install essential packages
   become: true
   package:

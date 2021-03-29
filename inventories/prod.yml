@@ -25,9 +25,8 @@ vms:
       data_disk_size: 800G
     bfiven:
       vm_ip: 192.168.0.11
-      ansible_port: 10022
       mac_address: 'c2:8f:2a:51:f0:8b'
-      os: ubuntu18_cloudimg
+      os: ubuntu20_cloudimg
       cores: 3
       memory: 4096
       system_disk_size: 30G
@@ -43,9 +42,8 @@ vms:
       data_disk_size: 800G
     bfivenpp:
       vm_ip: 192.168.0.13
-      ansible_port: 20022
       mac_address: 'c2:8f:2a:51:f0:8d'
-      os: ubuntu18_cloudimg
+      os: ubuntu20_cloudimg
       cores: 1
       memory: 1024
       system_disk_size: 20G
