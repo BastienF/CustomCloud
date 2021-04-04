@@ -1,4 +1,8 @@
 ---
 
-routing_nat_iptables_dir: /etc/routing_nat/
-clear_stale_vms_script: clear_stale_vms.sh
+nat_redirect: {}
+# nat_redirect:
+#  448:            #Exposed port
+#    vm: hostname  #Concerned vm
+#    port: 1448    #VM redirected port
+#    [protos: [tcp, udp]]  #Protocol (default: [tcp])

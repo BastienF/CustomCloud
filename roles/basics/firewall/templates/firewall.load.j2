@@ -43,7 +43,7 @@ iptables -t filter -C {{ INPUT_chain }} -i lo -j ACCEPT || iptables -t filter -A
 
 # Ouvre les ports exposés
 {% for port, config in firewall_exposed_ports|dictsort %}
-{% for proto in config.protos|default(["tcp"]) %}
+{% for proto in config.protos|default(['tcp']) %}
 iptables -t filter -C {{ INPUT_chain }} -p {{ proto }} --dport {{ port }} -j ACCEPT || iptables -t filter -A {{ INPUT_chain }} -p {{ proto }} --dport {{ port }} -j ACCEPT
 # iptables -t filter -C {{ OUTPUT_chain }} -p {{ proto }} --sport {{ port }} -j ACCEPT || iptables -t filter -A {{ OUTPUT_chain }} -p {{ proto }} --sport {{ port }} -j ACCEPT
 {% endfor %}

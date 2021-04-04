@@ -1,6 +1,6 @@
 ---
 
-nat_redirect_tcp:
+nat_redirect:
 #  448:            #Exposed port
 #    vm: hostname  #Concerned vm
 #    port: 1448    #VM redirected port

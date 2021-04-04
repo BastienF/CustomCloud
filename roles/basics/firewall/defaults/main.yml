@@ -2,7 +2,7 @@
 
 firewall_exposed_ports:
   22:
-    protos: ["tcp"]
+    protos: ['tcp']
 # firewall_exposed_ports:
 #   <portnum>:
 #     protos: [tcp,udp]

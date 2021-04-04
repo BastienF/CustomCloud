@@ -23,12 +23,12 @@ iptables -t nat -N {{ PREROUTING_chain }}
 iptables -t filter -N {{ INPUT_chain }}
 iptables -t filter -N {{ OUTPUT_chain }}
 
-{% for in_port, config in nat_redirect_tcp|dictsort %}
+{% for port, config in nat_redirect|dictsort %}
 {%   if config.vm == inventory_hostname %}
-{% for proto in config.protos|default(["tcp"]) %}
-{% set nat_rule = [PREROUTING_chain, '-d', ansible_default_ipv4.address, '-p', proto, '--dport', in_port|string, '-j DNAT --to', vm_ip + ':' + config.port|string]|join(' ') %}
-{% set input_rule = [INPUT_chain, '-d', ansible_default_ipv4.address, '-p', proto, '--dport', in_port|string, '-j ACCEPT']|join(' ') %}
-{% set output_rule = [OUTPUT_chain, '-p', proto, '--dport', in_port|string, '-j ACCEPT']|join(' ') %}
+{% for proto in config.protos|default(['tcp']) %}
+{% set nat_rule = [PREROUTING_chain, '-d', ansible_default_ipv4.address, '-p', proto, '--dport', port|string, '-j DNAT --to', vm_ip + ':' + config.port|string]|join(' ') %}
+{% set input_rule = [INPUT_chain, '-d', ansible_default_ipv4.address, '-p', proto, '--dport', port|string, '-j ACCEPT']|join(' ') %}
+{% set output_rule = [OUTPUT_chain, '-p', proto, '--dport', port|string, '-j ACCEPT']|join(' ') %}
 iptables -t nat -C {{ nat_rule }} || iptables -t nat -A {{ nat_rule }}
 iptables -t filter -C {{ input_rule }} || iptables -t filter -A {{ input_rule }}
 iptables -t filter -C {{ output_rule }} || iptables -t filter -A {{ output_rule }}
