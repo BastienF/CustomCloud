@@ -116,9 +116,5 @@ nat_redirect:
   20443:
     vm: bfivenpp
     port: 443
-### TEST ###
-  40022:
-    vm: test
-    port: 22
 
 vm_storage_base_dir: /data/virtu

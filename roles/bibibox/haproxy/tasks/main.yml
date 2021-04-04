@@ -23,7 +23,8 @@
     name: "{{ haproxy_registry }}{{ haproxy_repository }}"
     tag: "{{ haproxy_version }}"
     state: present
-    force: true
+    source: pull
+    force_source: true
 
 - name: Clean token
   become: true

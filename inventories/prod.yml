@@ -9,9 +9,9 @@ vms:
     bibibox:
       vm_ip: 192.168.0.5
       mac_address: 'c2:8f:2a:51:f0:89'
-      os: ubuntu16_cloudimg
+      os: ubuntu20_cloudimg
       cores: 2
-      memory: 2048
+      memory: 1024
       system_disk_size: 30G
       data_disk_size: 200G
     bbright:
@@ -50,10 +50,9 @@ vms:
       data_disk_size: 5G
     test:
       vm_ip: 192.168.0.20
-      ansible_port: 40022
       mac_address: 'c2:8f:2a:51:f0:8e'
-      os: ubuntu16_cloudimg
-      cores: 1
-      memory: 512
-      system_disk_size: 10G
-      data_disk_size: 10G
+      os: ubuntu20_cloudimg
+      cores: 2
+      memory: 1024
+      system_disk_size: 30G
+      data_disk_size: 200G
