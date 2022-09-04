@@ -1,5 +1,9 @@
 ---
 
+- name: netplan apply
+  become: true
+  shell: netplan apply
+
 - name: restart br0
   become: true
   shell: ifdown br0 && ifup br0

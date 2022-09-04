@@ -3,13 +3,13 @@
 - name: Install tools
   become: true
   apt:
-    name: "{{ item }}"
+    name:
+      - libvirt-clients
+      - libvirt-daemon-system
+      - virtinst
+      - qemu-kvm
+      - qemu-utils
+      - dosfstools
+      - mtools
+      - genisoimage
     state: present
-  with_items:
-    - libvirt-bin
-    - virtinst
-    - qemu-kvm
-    - qemu-utils
-    - dosfstools
-    - mtools
-    - genisoimage

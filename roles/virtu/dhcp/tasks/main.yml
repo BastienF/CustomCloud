@@ -19,7 +19,7 @@
     dest: /etc/default/isc-dhcp-server
   notify: restart isc-dhcp-server
 
-- name: Configure dhcp conf
+- name: Configure dhcpd conf
   become: true
   run_once: true
   template:

@@ -1,17 +1,8 @@
 ---
 
-- name: Ensure /etc/network/interfaces.d is sourced
-  become: true
-  lineinfile:
-    dest: /etc/network/interfaces
-    line: "source-directory /etc/network/interfaces.d"
-    insertafter: EOF
-    state: present
-  notify: restart br0
-
 - name: Configure bridge interface
   become: true
   template:
-    src: br0.j2
-    dest: /etc/network/interfaces.d/br0
-  notify: restart br0
+    src: 99-br0.yaml.j2
+    dest: /etc/netplan/99-br0.yaml
+  notify: netplan apply

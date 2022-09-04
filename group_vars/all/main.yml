@@ -1,5 +1,8 @@
 ---
 
+# https://www.fdn.fr/actions/dns/
+dhcp_domain_name_servers: ['80.67.169.12', '80.67.169.40']
+
 nat_redirect:
 #  448:            #Exposed port
 #    vm: hostname  #Concerned vm

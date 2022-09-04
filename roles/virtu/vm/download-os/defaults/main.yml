@@ -6,45 +6,38 @@
 os_force_update: false
 
 os_images:
+  ubuntu22_cloudimg:
+    url: https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+    checksum:
+      url: https://cloud-images.ubuntu.com/jammy/current/SHA256SUMS
+      algo: sha256
+      parser: ubuntu_cloudimg
+    variant: ubuntu22.04
   ubuntu20_cloudimg:
     url: https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
     checksum:
       url: https://cloud-images.ubuntu.com/focal/current/SHA1SUMS
       algo: sha1
       parser: ubuntu_cloudimg
-    variant: virtio26
+    variant: ubuntu20.04
   ubuntu18_cloudimg:
     url: https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
     checksum:
       url: https://cloud-images.ubuntu.com/bionic/current/SHA1SUMS
       algo: sha1
       parser: ubuntu_cloudimg
-    variant: virtio26
-  ubuntu16_cloudimg:
-    url: https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
-    checksum:
-      url: https://cloud-images.ubuntu.com/xenial/current/SHA1SUMS
-      algo: sha1
-      parser: ubuntu_cloudimg
-    variant: virtio26
-  centos6_cloudimg:
-    url: https://cloud.centos.org/centos/6/images/CentOS-6-x86_64-GenericCloud.qcow2
-    checksum:
-      url: https://cloud.centos.org/centos/6/images/sha256sum.txt
-      algo: sha256
-      parser: centos6_GenericCloud
-    variant: virtio26
+    variant: ubuntu18.04
   centos6.6_cloudimg:
     url: https://cloud.centos.org/centos/6.6/images/CentOS-6-x86_64-GenericCloud-20141129_01.qcow2
     checksum:
       url: https://cloud.centos.org/centos/6.6/images/sha256sum.txt
       algo: sha256
       parser: centos_exact_GenericCloud
-    variant: virtio26
+    variant: centos6.6
   centos7_cloudimg:
     url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
     checksum:
       url: https://cloud.centos.org/centos/7/images/sha256sum.txt
       algo: sha256
       parser: centos7_GenericCloud
-    variant: virtio26
+    variant: centos7

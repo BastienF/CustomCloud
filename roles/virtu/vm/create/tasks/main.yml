@@ -22,7 +22,7 @@
 
 - name: Create qcow2 image (system disc)
   become: true
-  command: qemu-img create -f qcow2 -b "{{ os_file }}" "{{ vm_disks_dir }}/root.qcow2" "{{ system_disk_size }}"
+  command: qemu-img create -f qcow2 -F qcow2 -b "{{ os_file }}" "{{ vm_disks_dir }}/root.qcow2" "{{ system_disk_size }}"
   args:
     creates: "{{ vm_disks_dir }}/root.qcow2"
 
@@ -61,7 +61,6 @@
         --vcpus={{ cores }}
         --memballoon virtio
         --memory={{ memory }}
-        --os-type=linux
         --os-variant={{ os_image.variant }}
         --import
         --network bridge=br0,mac={{ mac_address }},model=virtio
