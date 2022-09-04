@@ -6,7 +6,7 @@ all:
 
 host:
   hosts:
-    cloud3b:
+    cooltown:
 
 vms:
   hosts:

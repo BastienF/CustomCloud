@@ -87,12 +87,6 @@ nat_redirect:
     port: 4500
     protos: [udp]
 ### BFIVEN_PP ###
-#  20777:
-#    vm: bfivenpp
-#    port: 20777
-#  20778:
-#    vm: bfivenpp
-#    port: 20778
   20022:
     vm: bfivenpp
     port: 22
@@ -118,6 +112,16 @@ nat_redirect:
     port: 80
   20443:
     vm: bfivenpp
+    port: 443
+### NOBRAWL ###
+  25022:
+    vm: nbroblem
+    port: 22
+  25080:
+    vm: nbroblem
+    port: 80
+  25443:
+    vm: nbroblem
     port: 443
 
 vm_storage_base_dir: /data/virtu

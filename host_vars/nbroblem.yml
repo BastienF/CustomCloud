@@ -1,0 +1,6 @@
+---
+
+users:
+  ansible:
+    ssh_keys:
+      - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIECO02mN+t0sXaPQ7r8hgaR1oLZYR+EDUHNqz/UQm+96 ovh-nbr'

@@ -2,57 +2,68 @@
 
 host:
   hosts:
-    cloud3b:
+    cooltown:
 
 vms:
   hosts:
     bibibox:
       vm_ip: 192.168.0.5
-      mac_address: 'c2:8f:2a:51:f0:89'
-      os: ubuntu20_cloudimg
+      mac_address: 'c2:8f:2a:51:f0:05'
+      os: ubuntu22_cloudimg
       cores: 2
       memory: 1024
       system_disk_size: 30G
-      data_disk_size: 200G
-    bbright:
-      vm_ip: 192.168.0.10
-      ansible_port: 5022
-      mac_address: 'c2:8f:2a:51:f0:8a'
-      os: centos7_cloudimg
-      cores: 3
-      memory: 4096
-      system_disk_size: 30G
-      data_disk_size: 800G
-    bfiven:
-      vm_ip: 192.168.0.11
-      mac_address: 'c2:8f:2a:51:f0:8b'
-      os: ubuntu20_cloudimg
-      cores: 3
-      memory: 4096
-      system_disk_size: 30G
-      data_disk_size: 800G
-    bgarbage:
-      vm_ip: 192.168.0.12
-      ansible_port: 15022
-      mac_address: 'c2:8f:2a:51:f0:8c'
-      os: ubuntu20_cloudimg
-      cores: 3
-      memory: 4096
-      system_disk_size: 30G
-      data_disk_size: 800G
-    bfivenpp:
-      vm_ip: 192.168.0.13
-      mac_address: 'c2:8f:2a:51:f0:8d'
-      os: ubuntu20_cloudimg
-      cores: 1
+      data_disk_size: 100G
+    test:
+      vm_ip: 192.168.0.6
+      mac_address: 'c2:8f:2a:51:f0:06'
+      os: ubuntu22_cloudimg
+      cores: 2
       memory: 1024
       system_disk_size: 20G
-      data_disk_size: 5G
-    test:
-      vm_ip: 192.168.0.20
-      mac_address: 'c2:8f:2a:51:f0:8e'
-      os: ubuntu20_cloudimg
-      cores: 2
-      memory: 1024
+      data_disk_size: 20G
+    bfiven:
+      vm_ip: 192.168.0.10
+      ansible_port: 10022
+      mac_address: 'c2:8f:2a:51:f0:10'
+      os: ubuntu22_cloudimg
+      cores: 6
+      memory: 8192
+      system_disk_size: 60G
+      data_disk_size: 1000G
+    bgarbage:
+      vm_ip: 192.168.0.11
+      ansible_port: 15022
+      mac_address: 'c2:8f:2a:51:f0:11'
+      os: ubuntu22_cloudimg
+      cores: 6
+      memory: 8192
+      system_disk_size: 60G
+      data_disk_size: 1200G
+    bbright:
+      vm_ip: 192.168.0.12
+      ansible_port: 5022
+      mac_address: 'c2:8f:2a:51:f0:12'
+      os: ubuntu22_cloudimg
+      cores: 3
+      memory: 4096
       system_disk_size: 30G
-      data_disk_size: 200G
+      data_disk_size: 600G
+    nbroblem:
+      vm_ip: 192.168.0.13
+      ansible_port: 25022
+      mac_address: 'c2:8f:2a:51:f0:13'
+      os: ubuntu22_cloudimg
+      cores: 3
+      memory: 4096
+      system_disk_size: 30G
+      data_disk_size: 600G
+    bfivenpp:
+      vm_ip: 192.168.0.14
+      ansible_port: 20022
+      mac_address: 'c2:8f:2a:51:f0:14'
+      os: ubuntu22_cloudimg
+      cores: 3
+      memory: 2048
+      system_disk_size: 30G
+      data_disk_size: 170G
