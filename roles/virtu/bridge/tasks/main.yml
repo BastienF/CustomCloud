@@ -5,4 +5,19 @@
   template:
     src: 99-br0.yaml.j2
     dest: /etc/netplan/99-br0.yaml
+    mode: '644'
   notify: netplan apply
+
+- name: Configure bridge postup script
+  become: true
+  template:
+    src: 99-br0-postup.sh.j2
+    dest: /etc/networkd-dispatcher/routable.d/99-br0-postup.sh
+    mode: '755'
+
+- name: Configure bridge postdown script
+  become: true
+  template:
+    src: 99-br0-postdown.sh.j2
+    dest: /etc/networkd-dispatcher/off.d/99-br0-postdown.sh
+    mode: '755'

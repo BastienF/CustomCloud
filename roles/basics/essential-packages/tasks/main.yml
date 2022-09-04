@@ -10,12 +10,11 @@
 - name: Install essential packages
   become: true
   package:
-    name: "{{ item }}"
-    state: present
-  with_items:
+    name:
     - curl
     - htop
     - vim
+    state: present
 
 - name: install EPEL repo for RHEL like OSes
   become: true

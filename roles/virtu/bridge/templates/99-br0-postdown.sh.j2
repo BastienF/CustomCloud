@@ -1,0 +1,9 @@
+#! /bin/bash
+
+if [ "$IFACE" == "br0" ]; then
+  # nat table configuration
+  iptables -t nat -D POSTROUTING -j BR0_PRT
+
+  iptables -t nat -F BR0_PRT
+  iptables -t nat -X BR0_PRT
+fi
