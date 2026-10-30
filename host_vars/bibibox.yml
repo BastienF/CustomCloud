@@ -17,6 +17,9 @@ haproxy_services:
     public_fqdn: moi.ovh
     wildcard: true
     back_host: "{{ hostvars['bfiven']['vm_ip'] }}"
+    # bfiven's Traefik filters some services by client address: it trusts this header from bibibox
+    # (traefik_proxy_protocol_trusted_ips in BFIven). Deploy that Traefik setting first.
+    send_proxy: true
   bgstn_fr:
     decipher: false
     public_fqdn: bgstn.fr

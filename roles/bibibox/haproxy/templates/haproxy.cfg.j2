@@ -100,7 +100,7 @@ backend back_{{ service_key }}
 backend back_{{ service_key }}_ssl
   log global
   mode tcp
-  server srv_{{ service_key }}_ssl {{ service_value.back_host }}:{{ service_value.back_port_tls|default(443) }} check resolvers docker init-addr last,libc,none
+  server srv_{{ service_key }}_ssl {{ service_value.back_host }}:{{ service_value.back_port_tls|default(443) }} check resolvers docker init-addr last,libc,none{{ ' send-proxy-v2' if service_value.send_proxy|default(false)|bool else '' }}
 {%   endif %}
 
 

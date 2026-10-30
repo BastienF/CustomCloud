@@ -18,6 +18,8 @@ haproxy_services: {}
 #    back_host: <backend adress> (mandatory)
 #    back_port: 80 (default value) (when TLS is not handled, only clear HTTP is sent there)
 #    back_port_tls: 443 (default value) (when TLS is not handled, encrypted HTTPS is sent there)
+#    send_proxy: false (default value) (when TLS is not handled, true prefixes the encrypted stream with a PROXY protocol v2
+#                header holding the client address; the backend must accept it, or every connection fails)
 #  <tcp_endpoint>:
 #    tcp: true
 #    public_port: <exposed port> (mandatory)
